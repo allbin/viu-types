@@ -1,0 +1,43 @@
+{
+  "name": "@allbin/viu-types",
+  "version": "0.0.1",
+  "description": "",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "prebuild": "npm run lint",
+    "build": "rm -rf lib && tsc",
+    "test": "jest",
+    "lint": "eslint --ext .ts src",
+    "lint:fix": "eslint --fix src",
+    "prepublishOnly": "npm run build && npm run test"
+  },
+  "files": [
+    "lib/**/*"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/allbin/viu-types.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/allbin/viu-types/issues"
+  },
+  "homepage": "https://github.com/allbin/viu-types#readme",
+  "devDependencies": {
+    "@allbin/eslint-config": "^0.0.11",
+    "@types/luxon": "^3.3.2",
+    "@typescript-eslint/eslint-plugin": "^6.7.4",
+    "@typescript-eslint/parser": "^6.7.4",
+    "eslint": "^8.50.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "prettier": "^3.0.3",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "luxon": "^3.4.3",
+    "zod": "^3.22.2"
+  }
+}

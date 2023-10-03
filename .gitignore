@@ -1,0 +1,11 @@
+build
+node_modules
+
+.env
+envs
+k8s/configs
+
+*.swp
+.dbext.vim
+
+.idea
