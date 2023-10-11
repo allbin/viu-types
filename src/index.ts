@@ -106,6 +106,11 @@ export const ApiTenantModel = z.object({
 });
 export type ApiTenant = z.infer<typeof ApiTenantModel>;
 
+export const ApiPublicApartmentModel = z.object({
+  unit: z.string(),
+});
+export type ApiPublicApartment = z.infer<typeof ApiPublicApartmentModel>;
+
 export const ApiApartmentRequestModel = z.object({
   location_id: z.string().uuid(),
   unit: z.string(),
