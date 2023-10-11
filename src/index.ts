@@ -12,7 +12,7 @@ export type ApiTag = z.infer<typeof ApiTagModel>;
 
 export const ApiNameTagModel = ApiTagModel.extend({
   type: z.literal('nametag'),
-  apartment_id: z.string() /* (location_id:unit) */,
+  apartment_ref: z.string().describe('location_id:unit'),
 });
 export type ApiNameTag = z.infer<typeof ApiNameTagModel>;
 
