@@ -2,6 +2,8 @@ import z from 'zod';
 
 const auth0UserIdRegex = /^auth0\|[a-f0-9]{24}$/;
 
+//TODO: Add currently missing future fields to Tag related models.
+
 export const ApiTagModel = z.object({
   id: z.string(),
   organization_id: z.string(),
