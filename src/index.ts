@@ -16,6 +16,13 @@ export const ApiNameTagModel = ApiTagModel.extend({
 });
 export type ApiNameTag = z.infer<typeof ApiNameTagModel>;
 
+export const ApiNameTagInstallationRequestModel = z.object({
+  apartment_ref: z.string().describe('location_id:unit'),
+});
+export type ApiNameTagInstallationRequest = z.infer<
+  typeof ApiNameTagInstallationRequestModel
+>;
+
 export const ApiBookingTagCalendarModel = z.object({
   from: z.string().datetime(),
   to: z.string().datetime(),
