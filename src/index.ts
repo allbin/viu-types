@@ -643,12 +643,12 @@ export const ApiUserModel = z.object({
 });
 export type ApiUser = z.infer<typeof ApiUserModel>;
 
-export const ViuUserModel = z.object({
+export const UserModel = z.object({
   uid: z.string(),
   organization: z.string(),
   permissions: ApiPermissionModel.array(),
 });
-export type ViuUser = z.infer<typeof ViuUserModel>;
+export type User = z.infer<typeof UserModel>;
 
 export const ApiValidationErrorModel = ApiErrorModel.extend({
   errors: ApiParameterValidationErrorModel.array(),

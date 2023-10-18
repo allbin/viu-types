@@ -1,9 +1,9 @@
 {
   "name": "@allbin/viu-types",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "description": "",
   "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "tuypes": "lib/index.d.ts",
   "scripts": {
     "prebuild": "npm run lint",
     "build": "rm -rf lib && tsc",
