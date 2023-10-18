@@ -654,3 +654,9 @@ export const ApiValidationErrorModel = ApiErrorModel.extend({
   errors: ApiParameterValidationErrorModel.array(),
 });
 export type ApiValidationError = z.infer<typeof ApiValidationErrorModel>;
+
+export const ApiSchedulerLastRunModel = z.object({
+  hash: z.string(),
+  last_run: z.string().datetime(),
+});
+export type ApiSchedulerLastRun = z.infer<typeof ApiSchedulerLastRunModel>;
