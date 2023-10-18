@@ -655,8 +655,8 @@ export const ApiValidationErrorModel = ApiErrorModel.extend({
 });
 export type ApiValidationError = z.infer<typeof ApiValidationErrorModel>;
 
-export const ApiSchedulerLastRunModel = z.object({
+export const DbSchedulerLastRunModel = z.object({
   hash: z.string(),
-  last_run: z.string().datetime(),
+  last_run: z.date(),
 });
-export type ApiSchedulerLastRun = z.infer<typeof ApiSchedulerLastRunModel>;
+export type DbSchedulerLastRun = z.infer<typeof DbSchedulerLastRunModel>;
