@@ -132,7 +132,7 @@ export const ApiApartmentRequestModel = z.object({
 export type ApiApartmentRequest = z.infer<typeof ApiApartmentRequestModel>;
 
 export const ApiSyncApartmentsRequestModel = z.object({
-  oganization_id: z.string(),
+  organization_id: z.string(),
   apartment_ids: z.array(z.string().uuid()),
 });
 export type ApiSyncApartmentsRequest = z.infer<
