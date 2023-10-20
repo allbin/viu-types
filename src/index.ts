@@ -4,15 +4,15 @@ const auth0UserIdRegex = /^auth0\|[a-f0-9]{24}$/;
 
 //TODO: Add currently missing future fields to Tag related models.
 
-export const ApiTagModel = z.object({
+export const ApiTagBaseModel = z.object({
   id: z.string(),
   organization_id: z.string(),
   last_gateway_id: z.string(),
   last_heartbeat_at: z.string().datetime(),
 });
-export type ApiTag = z.infer<typeof ApiTagModel>;
+export type ApiTagBase = z.infer<typeof ApiTagBaseModel>;
 
-export const ApiNameTagModel = ApiTagModel.extend({
+export const ApiNameTagModel = ApiTagBaseModel.extend({
   type: z.literal('nametag'),
   location_id: z.string().uuid(),
   unit: z.string(),
@@ -33,12 +33,18 @@ export const ApiBookingTagCalendarModel = z.object({
 });
 export type ApiBookingTagCalendar = z.infer<typeof ApiBookingTagCalendarModel>;
 
-export const ApiBookingTagModel = ApiTagModel.extend({
+export const ApiBookingTagModel = ApiTagBaseModel.extend({
   type: z.literal('bookingtag'),
   resource_id: z.string(),
   calendar: z.array(ApiBookingTagCalendarModel),
 });
 export type ApiBookingTag = z.infer<typeof ApiBookingTagModel>;
+
+export const ApiTagModel = z.discriminatedUnion('type', [
+  ApiNameTagModel,
+  ApiBookingTagModel,
+]);
+export type ApiTag = z.infer<typeof ApiTagModel>;
 
 export const ApiAddressModel = z.object({
   street: z.string().describe('Street address'),
