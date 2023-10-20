@@ -16,6 +16,8 @@ export const ApiNameTagModel = ApiTagBaseModel.extend({
   type: z.literal('nametag'),
   location_id: z.string().uuid(),
   unit: z.string(),
+  tenants: z.array(z.string()),
+  street: z.string(),
 });
 export type ApiNameTag = z.infer<typeof ApiNameTagModel>;
 
