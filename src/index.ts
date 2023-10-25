@@ -676,3 +676,7 @@ export const DbSchedulerLastRunModel = z.object({
   last_run: z.date(),
 });
 export type DbSchedulerLastRun = z.infer<typeof DbSchedulerLastRunModel>;
+export const ApiResultModel = z.object({
+  result: z.boolean(),
+});
+export type ApiResult = z.infer<typeof ApiResultModel>;
