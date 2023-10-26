@@ -630,6 +630,7 @@ export const ApiPermissionModel = z.enum([
   'apartments:create',
   'apartments:update',
   'apartments:delete',
+  'apartments:sync',
   'attachments:create',
   'attachments:update',
   'attachments:delete',
