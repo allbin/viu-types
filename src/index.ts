@@ -7,7 +7,6 @@ const auth0UserIdRegex = /^auth0\|[a-f0-9]{24}$/;
 export const ApiTagBaseModel = z.object({
   id: z.string(),
   network_id: z.string(),
-  nonce: z.string(),
   organization_id: z.string(),
   last_gateway_id: z.string(),
   last_heartbeat_at: z.string().datetime(),
