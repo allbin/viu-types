@@ -30,16 +30,18 @@ export type ApiNameTagInstallationRequest = z.infer<
   typeof ApiNameTagInstallationRequestModel
 >;
 
-export const ApiBookingTagCalendarModel = z.object({
+export const ApiBookingTagBookingModel = z.object({
   from: z.string().datetime(),
   to: z.string().datetime(),
+  contact: z.string(),
 });
-export type ApiBookingTagCalendar = z.infer<typeof ApiBookingTagCalendarModel>;
+export type ApiBookingTagBooking = z.infer<typeof ApiBookingTagBookingModel>;
 
 export const ApiBookingTagModel = ApiTagBaseModel.extend({
   type: z.literal('bookingtag'),
   resource_id: z.string(),
-  calendar: z.array(ApiBookingTagCalendarModel),
+  resource_name: z.string(),
+  bookings: z.array(ApiBookingTagBookingModel),
 });
 export type ApiBookingTag = z.infer<typeof ApiBookingTagModel>;
 
