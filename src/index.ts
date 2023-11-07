@@ -685,3 +685,13 @@ export const ApiResultModel = z.object({
   result: z.boolean(),
 });
 export type ApiResult = z.infer<typeof ApiResultModel>;
+
+export const ApiGoogleCalendarTokenModel = z.object({
+  username: z.string(),
+  organization_id: z.string(),
+  refresh_token: z.string(),
+  access_token: z.string(),
+});
+export type ApiGoogleCalendarToken = z.infer<
+  typeof ApiGoogleCalendarTokenModel
+>;
