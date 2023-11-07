@@ -39,6 +39,7 @@ export type ApiBookingTagBooking = z.infer<typeof ApiBookingTagBookingModel>;
 
 export const ApiBookingTagModel = ApiTagBaseModel.extend({
   type: z.literal('bookingtag'),
+  driver: z.enum(['wip', 'bokamera', 'google', 'microsoft']),
   resource_id: z.string(),
   resource_name: z.string(),
   bookings: z.array(ApiBookingTagBookingModel),
