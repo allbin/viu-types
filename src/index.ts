@@ -692,6 +692,7 @@ export const ApiGoogleCalendarTokenModel = z.object({
   organization_id: z.string(),
   refresh_token: z.string(),
   access_token: z.string(),
+  meta: ApiMetadataModel,
 });
 export type ApiGoogleCalendarToken = z.infer<
   typeof ApiGoogleCalendarTokenModel
