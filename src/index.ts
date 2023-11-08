@@ -687,20 +687,28 @@ export const ApiResultModel = z.object({
 });
 export type ApiResult = z.infer<typeof ApiResultModel>;
 
-export const ApiGoogleCalendarTokenModel = z.object({
+export const ApiGoogleCalendarTokenRequestModel = z.object({
   username: z.string(),
   organization_id: z.string(),
   refresh_token: z.string(),
   access_token: z.string(),
-  meta: ApiMetadataModel,
-});
-export type ApiGoogleCalendarToken = z.infer<
-  typeof ApiGoogleCalendarTokenModel
->;
-export const ApiGoogleCalendarTokenRequestModel = z.object({
-  tag_id: z.string(),
-  auth_code: z.string(),
 });
 export type ApiGoogleCalendarTokenRequest = z.infer<
   typeof ApiGoogleCalendarTokenRequestModel
+>;
+
+export const ApiGoogleCalendarTokenModel =
+  ApiGoogleCalendarTokenRequestModel.extend({
+    meta: ApiMetadataModel,
+  });
+export type ApiGoogleCalendarToken = z.infer<
+  typeof ApiGoogleCalendarTokenModel
+>;
+
+export const ApiGoogleCalendarTokenAuthCodeRequestModel = z.object({
+  tag_id: z.string(),
+  auth_code: z.string(),
+});
+export type ApiGoogleCalendarTokenAuthCodeRequest = z.infer<
+  typeof ApiGoogleCalendarTokenAuthCodeRequestModel
 >;
