@@ -688,10 +688,8 @@ export const ApiResultModel = z.object({
 export type ApiResult = z.infer<typeof ApiResultModel>;
 
 export const ApiGoogleCalendarTokenModel = z.object({
-  username: z.string(),
-  organization_id: z.string(),
-  refresh_token: z.string(),
-  access_token: z.string(),
+  tag_id: z.string(),
+  auth_code: z.string(),
 });
 export type ApiGoogleCalendarToken = z.infer<
   typeof ApiGoogleCalendarTokenModel
