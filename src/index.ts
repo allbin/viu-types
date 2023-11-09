@@ -712,3 +712,64 @@ export const ApiGoogleCalendarTokenAuthCodeRequestModel = z.object({
 export type ApiGoogleCalendarTokenAuthCodeRequest = z.infer<
   typeof ApiGoogleCalendarTokenAuthCodeRequestModel
 >;
+
+export const ApiBookingTagCalendarResourceModel = z.object({
+  id: z.string(),
+  name: z.string(),
+});
+export type ApiBookingTagCalendarResource = z.infer<
+  typeof ApiBookingTagCalendarResourceModel
+>;
+
+export const ApiBookingTagBaseCalendarResourceRequestModel = z.object({
+  tag_id: z.string(),
+});
+export type ApiBookingTagBaseCalendarResourceRequest = z.infer<
+  typeof ApiBookingTagBaseCalendarResourceRequestModel
+>;
+
+export const ApiBookingTagWipCalendarResourceRequestModel =
+  ApiBookingTagBaseCalendarResourceRequestModel.extend({
+    driver: z.literal('wip'),
+  });
+export type ApiBookingTagWipCalendarResourceRequest = z.infer<
+  typeof ApiBookingTagWipCalendarResourceRequestModel
+>;
+
+export const ApiBookingTagBokaMeraCalendarResourceRequestModel =
+  ApiBookingTagBaseCalendarResourceRequestModel.extend({
+    driver: z.literal('bokamera'),
+  });
+export type ApiBookingTagBokaMeraCalendarResourceRequest = z.infer<
+  typeof ApiBookingTagBokaMeraCalendarResourceRequestModel
+>;
+
+export const ApiBookingTagGoogleCalendarResourceRequestModel =
+  ApiBookingTagBaseCalendarResourceRequestModel.extend({
+    driver: z.literal('google'),
+    username: z.string(),
+  });
+export type ApiBookingTagGoogleCalendarResourceRequest = z.infer<
+  typeof ApiBookingTagGoogleCalendarResourceRequestModel
+>;
+
+export const ApiBookingTagMicrosoftCalendarResourceRequestModel =
+  ApiBookingTagBaseCalendarResourceRequestModel.extend({
+    driver: z.literal('microsoft'),
+  });
+export type ApiBookingTagMicrosoftCalendarResourceRequest = z.infer<
+  typeof ApiBookingTagMicrosoftCalendarResourceRequestModel
+>;
+
+export const ApiBookingTagCalendarResourceRequestModel = z.discriminatedUnion(
+  'driver',
+  [
+    ApiBookingTagWipCalendarResourceRequestModel,
+    ApiBookingTagBokaMeraCalendarResourceRequestModel,
+    ApiBookingTagGoogleCalendarResourceRequestModel,
+    ApiBookingTagMicrosoftCalendarResourceRequestModel,
+  ],
+);
+export type ApiBookingTagCalendarResourceRequest = z.infer<
+  typeof ApiBookingTagCalendarResourceRequestModel
+>;
