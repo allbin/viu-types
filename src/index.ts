@@ -30,6 +30,13 @@ export type ApiNameTagInstallationRequest = z.infer<
   typeof ApiNameTagInstallationRequestModel
 >;
 
+export const ApiBookingTagDriverTypeModel = z.enum([
+  'wip',
+  'bokamera',
+  'google',
+  'microsoft',
+]);
+
 export const ApiBookingTagBookingModel = z.object({
   from: z.string().datetime(),
   to: z.string().datetime(),
@@ -39,7 +46,7 @@ export type ApiBookingTagBooking = z.infer<typeof ApiBookingTagBookingModel>;
 
 export const ApiBookingTagModel = ApiTagBaseModel.extend({
   type: z.literal('bookingtag'),
-  driver: z.enum(['wip', 'bokamera', 'google', 'microsoft']),
+  driver: ApiBookingTagDriverTypeModel,
   resource_id: z.string(),
   resource_name: z.string(),
   bookings: z.array(ApiBookingTagBookingModel),
@@ -773,3 +780,47 @@ export const ApiBookingTagCalendarResourceRequestModel = z.discriminatedUnion(
 export type ApiBookingTagCalendarResourceRequest = z.infer<
   typeof ApiBookingTagCalendarResourceRequestModel
 >;
+
+export const ApiBookingConnectorBaseModel = z.object({
+  id: z.string().uuid(),
+  organization_id: z.string(),
+  meta: ApiMetadataModel,
+  driver_type: ApiBookingTagDriverTypeModel,
+  name: z.string(),
+});
+
+export const ApiBookingConnectorWipConfigModel = z.object({
+  calendar_base_url: z.string(),
+});
+
+export const ApiBookingConnectorWipModel = ApiBookingConnectorBaseModel.extend({
+  driver_type: z.literal('wip'),
+  config: ApiBookingConnectorWipConfigModel,
+});
+
+export const ApiBookingConnectorBokaMeraConfigModel = z.object({
+  api_base_url: z.string(),
+  api_token_url: z.string(),
+  api_key: z.string(),
+  client_id: z.string(),
+  username: z.string(),
+  password: z.string(),
+  access_token: z.string().optional(),
+  refresh_token: z.string().optional(),
+});
+export type ApiBookingConnectorBokaMeraConfig = z.infer<
+  typeof ApiBookingConnectorBokaMeraConfigModel
+>;
+
+export const ApiBookingConnectorBokaMeraModel = z.object({
+  driver_type: z.literal('bokamera'),
+  config: ApiBookingConnectorBokaMeraConfigModel,
+});
+export type ApiBookingConnectorBokaMera = z.infer<
+  typeof ApiBookingConnectorBokaMeraModel
+>;
+
+export const ApiBookingConnectorModel = z.discriminatedUnion('driver_type', [
+  ApiBookingConnectorWipModel,
+  ApiBookingConnectorBokaMeraModel,
+]);
