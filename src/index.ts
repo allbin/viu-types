@@ -40,12 +40,12 @@ export type ApiBookingTagDriverType = z.infer<
   typeof ApiBookingTagDriverTypeModel
 >;
 
-export const ApiBookingTagBookingModel = z.object({
+export const ApiBookingTagEventModel = z.object({
   from: z.string().datetime(),
   to: z.string().datetime(),
   contact: z.string(),
 });
-export type ApiBookingTagBooking = z.infer<typeof ApiBookingTagBookingModel>;
+export type ApiBookingTagEvent = z.infer<typeof ApiBookingTagEventModel>;
 
 export const ApiBookingTagModel = ApiTagBaseModel.extend({
   type: z.literal('bookingtag'),
@@ -53,7 +53,7 @@ export const ApiBookingTagModel = ApiTagBaseModel.extend({
   resource_id: z.string(),
   resource_source_id: z.string(),
   resource_name: z.string(),
-  bookings: z.array(ApiBookingTagBookingModel),
+  bookings: z.array(ApiBookingTagEventModel),
 });
 export type ApiBookingTag = z.infer<typeof ApiBookingTagModel>;
 
@@ -734,67 +734,11 @@ export type ApiGoogleCalendarTokenAuthCodeRequest = z.infer<
   typeof ApiGoogleCalendarTokenAuthCodeRequestModel
 >;
 
-export const ApiBookingTagCalendarResourceModel = z.object({
-  id: z.string(),
+export const ApiBookingTagResourceModel = z.object({
+  resource_source_id: z.string(),
   name: z.string(),
 });
-
-export type ApiBookingTagCalendarResource = z.infer<
-  typeof ApiBookingTagCalendarResourceModel
->;
-
-export const ApiBookingTagBaseCalendarResourceRequestModel = z.object({
-  tag_id: z.string(),
-});
-export type ApiBookingTagBaseCalendarResourceRequest = z.infer<
-  typeof ApiBookingTagBaseCalendarResourceRequestModel
->;
-
-export const ApiBookingTagWipCalendarResourceRequestModel =
-  ApiBookingTagBaseCalendarResourceRequestModel.extend({
-    driver: z.literal('wip'),
-  });
-export type ApiBookingTagWipCalendarResourceRequest = z.infer<
-  typeof ApiBookingTagWipCalendarResourceRequestModel
->;
-
-export const ApiBookingTagBokaMeraCalendarResourceRequestModel =
-  ApiBookingTagBaseCalendarResourceRequestModel.extend({
-    driver: z.literal('bokamera'),
-  });
-export type ApiBookingTagBokaMeraCalendarResourceRequest = z.infer<
-  typeof ApiBookingTagBokaMeraCalendarResourceRequestModel
->;
-
-export const ApiBookingTagGoogleCalendarResourceRequestModel =
-  ApiBookingTagBaseCalendarResourceRequestModel.extend({
-    driver: z.literal('google'),
-    username: z.string(),
-  });
-export type ApiBookingTagGoogleCalendarResourceRequest = z.infer<
-  typeof ApiBookingTagGoogleCalendarResourceRequestModel
->;
-
-export const ApiBookingTagMicrosoftCalendarResourceRequestModel =
-  ApiBookingTagBaseCalendarResourceRequestModel.extend({
-    driver: z.literal('microsoft'),
-  });
-export type ApiBookingTagMicrosoftCalendarResourceRequest = z.infer<
-  typeof ApiBookingTagMicrosoftCalendarResourceRequestModel
->;
-
-export const ApiBookingTagCalendarResourceRequestModel = z.discriminatedUnion(
-  'driver',
-  [
-    ApiBookingTagWipCalendarResourceRequestModel,
-    ApiBookingTagBokaMeraCalendarResourceRequestModel,
-    ApiBookingTagGoogleCalendarResourceRequestModel,
-    ApiBookingTagMicrosoftCalendarResourceRequestModel,
-  ],
-);
-export type ApiBookingTagCalendarResourceRequest = z.infer<
-  typeof ApiBookingTagCalendarResourceRequestModel
->;
+export type ApiBookingTagResource = z.infer<typeof ApiBookingTagResourceModel>;
 
 export const ApiBookingConnectorRequestModel = z.object({
   id: z.string().uuid(),
