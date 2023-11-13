@@ -825,6 +825,7 @@ export const ApiBookingConnectorBokaMeraConfigModel = z.object({
   client_id: z.string(),
   username: z.string(),
   password: z.string(),
+  timezone: z.string().optional(),
   access_token: z.string().optional(),
   refresh_token: z.string().optional(),
 });
