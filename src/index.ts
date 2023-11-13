@@ -828,3 +828,4 @@ export const ApiBookingConnectorModel = z.discriminatedUnion('driver_type', [
   ApiBookingConnectorWipModel,
   ApiBookingConnectorBokaMeraModel,
 ]);
+export type ApiBookingConnector = z.infer<typeof ApiBookingConnectorModel>;
