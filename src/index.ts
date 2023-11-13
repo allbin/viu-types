@@ -53,7 +53,7 @@ export const ApiBookingTagModel = ApiTagBaseModel.extend({
   resource_id: z.string(),
   resource_source_id: z.string(),
   resource_name: z.string(),
-  bookings: z.array(ApiBookingTagEventModel),
+  events: z.array(ApiBookingTagEventModel),
 });
 export type ApiBookingTag = z.infer<typeof ApiBookingTagModel>;
 
