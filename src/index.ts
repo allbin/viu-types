@@ -58,6 +58,9 @@ export const ApiBookingTagInstallationRequestModel = z.object({
   resource_id: z.string(),
   tag_id: z.string(),
 });
+export type ApiBookingTagInstallationRequest = z.infer<
+  typeof ApiBookingTagInstallationRequestModel
+>;
 
 export const ApiTagModel = z.discriminatedUnion('type', [
   ApiNameTagModel,
