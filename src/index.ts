@@ -36,6 +36,9 @@ export const ApiBookingTagDriverTypeModel = z.enum([
   'google',
   'microsoft',
 ]);
+export type ApiBookingTagDriverType = z.infer<
+  typeof ApiBookingTagDriverTypeModel
+>;
 
 export const ApiBookingTagBookingModel = z.object({
   from: z.string().datetime(),
