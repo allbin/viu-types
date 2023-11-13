@@ -781,12 +781,16 @@ export type ApiBookingTagCalendarResourceRequest = z.infer<
   typeof ApiBookingTagCalendarResourceRequestModel
 >;
 
-export const ApiBookingConnectorBaseModel = z.object({
+export const ApiBookingConnectorRequest = z.object({
   id: z.string().uuid(),
   organization_id: z.string(),
-  meta: ApiMetadataModel,
   driver_type: ApiBookingTagDriverTypeModel,
   name: z.string(),
+  config: z.unknown(),
+});
+
+export const ApiBookingConnectorBaseModel = ApiBookingConnectorRequest.extend({
+  meta: ApiMetadataModel,
 });
 
 export const ApiBookingConnectorWipConfigModel = z.object({
