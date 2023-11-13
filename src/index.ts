@@ -821,10 +821,11 @@ export type ApiBookingConnectorBokaMeraConfig = z.infer<
   typeof ApiBookingConnectorBokaMeraConfigModel
 >;
 
-export const ApiBookingConnectorBokaMeraModel = z.object({
-  driver_type: z.literal('bokamera'),
-  config: ApiBookingConnectorBokaMeraConfigModel,
-});
+export const ApiBookingConnectorBokaMeraModel =
+  ApiBookingConnectorBaseModel.extend({
+    driver_type: z.literal('bokamera'),
+    config: ApiBookingConnectorBokaMeraConfigModel,
+  });
 export type ApiBookingConnectorBokaMera = z.infer<
   typeof ApiBookingConnectorBokaMeraModel
 >;
