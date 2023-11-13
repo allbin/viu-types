@@ -49,8 +49,9 @@ export type ApiBookingTagBooking = z.infer<typeof ApiBookingTagBookingModel>;
 
 export const ApiBookingTagModel = ApiTagBaseModel.extend({
   type: z.literal('bookingtag'),
-  driver: ApiBookingTagDriverTypeModel,
+  connector_id: z.string(),
   resource_id: z.string(),
+  resource_source_id: z.string(),
   resource_name: z.string(),
   bookings: z.array(ApiBookingTagBookingModel),
 });
@@ -58,9 +59,10 @@ export type ApiBookingTag = z.infer<typeof ApiBookingTagModel>;
 
 export const ApiBookingTagInstallationRequestModel = z.object({
   connector_id: z.string().uuid(),
-  resource_id: z.string(),
-  tag_id: z.string(),
+  resource_source_id: z.string(),
+  resource_name: z.string(),
 });
+
 export type ApiBookingTagInstallationRequest = z.infer<
   typeof ApiBookingTagInstallationRequestModel
 >;
