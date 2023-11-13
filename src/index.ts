@@ -53,6 +53,12 @@ export const ApiBookingTagModel = ApiTagBaseModel.extend({
 });
 export type ApiBookingTag = z.infer<typeof ApiBookingTagModel>;
 
+export const ApiBookingTagInstallationRequestModel = z.object({
+  connector_id: z.string().uuid(),
+  resource_id: z.string(),
+  tag_id: z.string(),
+});
+
 export const ApiTagModel = z.discriminatedUnion('type', [
   ApiNameTagModel,
   ApiBookingTagModel,
