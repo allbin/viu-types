@@ -724,6 +724,7 @@ export const ApiBookingTagCalendarResourceModel = z.object({
   id: z.string(),
   name: z.string(),
 });
+
 export type ApiBookingTagCalendarResource = z.infer<
   typeof ApiBookingTagCalendarResourceModel
 >;
@@ -781,17 +782,21 @@ export type ApiBookingTagCalendarResourceRequest = z.infer<
   typeof ApiBookingTagCalendarResourceRequestModel
 >;
 
-export const ApiBookingConnectorRequest = z.object({
+export const ApiBookingConnectorRequestModel = z.object({
   id: z.string().uuid(),
   organization_id: z.string(),
   driver_type: ApiBookingTagDriverTypeModel,
   name: z.string(),
   config: z.unknown(),
 });
+export type ApiBookingConnectorRequest = z.infer<
+  typeof ApiBookingConnectorRequestModel
+>;
 
-export const ApiBookingConnectorBaseModel = ApiBookingConnectorRequest.extend({
-  meta: ApiMetadataModel,
-});
+export const ApiBookingConnectorBaseModel =
+  ApiBookingConnectorRequestModel.extend({
+    meta: ApiMetadataModel,
+  });
 
 export const ApiBookingConnectorWipConfigModel = z.object({
   calendar_base_url: z.string(),
