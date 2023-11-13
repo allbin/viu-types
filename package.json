@@ -1,6 +1,6 @@
 {
   "name": "@allbin/viu-types",
-  "version": "0.10.2",
+  "version": "0.11.0",
   "description": "",
   "main": "lib/index.js",
   "tuypes": "lib/index.d.ts",

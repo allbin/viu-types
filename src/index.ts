@@ -802,10 +802,12 @@ export type ApiBookingConnectorRequest = z.infer<
   typeof ApiBookingConnectorRequestModel
 >;
 
-export const ApiBookingConnectorBaseModel =
-  ApiBookingConnectorRequestModel.extend({
-    meta: ApiMetadataModel,
-  });
+export const ApiBookingConnectorBaseModel = z.object({
+  id: z.string().uuid(),
+  organization_id: z.string(),
+  meta: ApiMetadataModel,
+  name: z.string(),
+});
 
 export const ApiBookingConnectorWipConfigModel = z.object({
   calendar_base_url: z.string(),
