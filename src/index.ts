@@ -1,4 +1,6 @@
 import z from 'zod';
+import * as GeoJSON from './geojson';
+export * as GeoJSON from './geojson';
 
 const auth0UserIdRegex = /^auth0\|[a-f0-9]{24}$/;
 
@@ -795,3 +797,98 @@ export const ApiBookingConnectorModel = z.discriminatedUnion('driver_type', [
   ApiBookingConnectorBokaMeraModel,
 ]);
 export type ApiBookingConnector = z.infer<typeof ApiBookingConnectorModel>;
+
+export const ApiGeoJSONModel = z.discriminatedUnion('type', [
+  GeoJSON.FeatureCollectionModel,
+  GeoJSON.FeatureModel,
+]);
+export type ApiGeoJSON = z.infer<typeof ApiGeoJSONModel>;
+
+export const ApiCompanyContactModel = z.object({
+  name: z.string(),
+  email: z.string().email().optional(),
+  phone: z
+    .string()
+    .regex(/^\+?[0-9 -]+$/)
+    .optional(),
+  title: z.string().optional(),
+  image: z.string().url().optional(),
+});
+export type ApiCompanyContact = z.infer<typeof ApiCompanyContactModel>;
+
+export const ApiCompanyModel = z.object({
+  id: z.string().uuid(),
+  name: z.string(),
+  description: z.string().optional(),
+  contacts: z.array(ApiCompanyContactModel),
+  logo: z.string().url(),
+});
+
+export type ApiCompany = z.infer<typeof ApiCompanyModel>;
+
+export const ApiFloorModel = z.object({
+  id: z.string().uuid(),
+  location_id: z.string().uuid(),
+  level: z.number(),
+  level_label: z.string().optional(),
+  floor_plan: z.string().url().optional(),
+  unit_geojson: ApiGeoJSONModel.optional(),
+});
+export type ApiFloor = z.infer<typeof ApiFloorModel>;
+
+export const ApiUnitTenantIndividualModel = z.object({
+  type: z.literal('individual'),
+  first_name: z.string(),
+  last_name: z.string().optional(),
+  active_from: z.string().datetime(),
+  active_to: z.string().datetime().optional(),
+});
+export type ApiUnitTenantIndividual = z.infer<
+  typeof ApiUnitTenantIndividualModel
+>;
+
+export const ApiUnitTenantCompanyModel = z.object({
+  type: z.literal('company'),
+  company: ApiCompanyModel,
+  active_from: z.string().datetime(),
+  active_to: z.string().datetime().optional(),
+});
+export type ApiUnitTenantCompany = z.infer<typeof ApiUnitTenantCompanyModel>;
+
+export const ApiUnitTenantModel = z.discriminatedUnion('type', [
+  ApiUnitTenantIndividualModel,
+  ApiUnitTenantCompanyModel,
+]);
+export type ApiUnitTenant = z.infer<typeof ApiUnitTenantModel>;
+
+export const ApiUnitBookingInfoModel = z.object({
+  connector_id: z.string().uuid(),
+  /** <connector_id:resource_source_id> */
+  resource_id: z.string(),
+});
+export type ApiUnitBookingInfo = z.infer<typeof ApiUnitBookingInfoModel>;
+
+export const ApiUnitModel = z.object({
+  id: z.string().uuid(),
+  floor_id: z.string().uuid(),
+  tenants: z.array(ApiUnitTenantModel),
+  booking: ApiUnitBookingInfoModel.optional(),
+});
+export type ApiUnit = z.infer<typeof ApiUnitModel>;
+
+export const ApiAreaModel = z.object({
+  id: z.string().uuid(),
+  name: z.string(),
+  area_geojson: ApiGeoJSONModel,
+});
+export type ApiArea = z.infer<typeof ApiAreaModel>;
+
+export const ApiServiceModel = z.object({
+  id: z.string().uuid(),
+  area_id: z.string().uuid(),
+  type: z.string(),
+  name: z.string(),
+  equipment: z.array(z.string()),
+  photo: z.string().url().optional(),
+});
+export type ApiService = z.infer<typeof ApiServiceModel>;
