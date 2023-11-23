@@ -821,7 +821,7 @@ export const ApiCompanyModel = z.object({
   name: z.string(),
   description: z.string().optional(),
   contacts: z.array(ApiCompanyContactModel),
-  logo: z.string().url(),
+  logo: z.string().url().optional(),
 });
 
 export type ApiCompany = z.infer<typeof ApiCompanyModel>;
@@ -837,6 +837,7 @@ export const ApiFloorModel = z.object({
 export type ApiFloor = z.infer<typeof ApiFloorModel>;
 
 export const ApiUnitTenantIndividualModel = z.object({
+  id: z.string().uuid(),
   type: z.literal('individual'),
   first_name: z.string(),
   last_name: z.string().optional(),
@@ -848,6 +849,7 @@ export type ApiUnitTenantIndividual = z.infer<
 >;
 
 export const ApiUnitTenantCompanyModel = z.object({
+  id: z.string().uuid(),
   type: z.literal('company'),
   company: ApiCompanyModel,
   active_from: z.string().datetime(),
