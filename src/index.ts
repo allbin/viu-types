@@ -760,6 +760,15 @@ export const ApiBookingConnectorBaseModel = z.object({
   name: z.string(),
 });
 
+export const ApiBookingConnectorResponseModel = z.object({
+  id: z.string().uuid(),
+  name: z.string(),
+  driver_type: ApiBookingTagDriverTypeModel,
+});
+export type ApiBookingConnectorResponse = z.infer<
+  typeof ApiBookingConnectorResponseModel
+>;
+
 export const ApiBookingConnectorWipConfigModel = z.object({
   calendar_base_url: z.string(),
 });
