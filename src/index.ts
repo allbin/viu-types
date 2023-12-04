@@ -760,13 +760,13 @@ export const ApiBookingConnectorBaseModel = z.object({
   name: z.string(),
 });
 
-export const ApiBookingConnectorResponseModel = z.object({
+export const ApiPublicBookingConnectorModel = z.object({
   id: z.string().uuid(),
   name: z.string(),
   driver_type: ApiBookingTagDriverTypeModel,
 });
-export type ApiBookingConnectorResponse = z.infer<
-  typeof ApiBookingConnectorResponseModel
+export type ApiPublicBookingConnector = z.infer<
+  typeof ApiPublicBookingConnectorModel
 >;
 
 export const ApiBookingConnectorWipConfigModel = z.object({
