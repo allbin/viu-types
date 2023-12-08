@@ -778,6 +778,21 @@ export const ApiBookingConnectorWipModel = ApiBookingConnectorBaseModel.extend({
   config: ApiBookingConnectorWipConfigModel,
 });
 
+export const ApiBookingConnectorGoogleConfigModel = z.object({
+  private_key: z.string(),
+  client_email: z.string(),
+  customer_id: z.string(),
+});
+
+export const ApiBookingConnectorGoogleModel =
+  ApiBookingConnectorBaseModel.extend({
+    driver_type: z.literal('google'),
+    config: ApiBookingConnectorGoogleConfigModel,
+  });
+export type ApiBookingConnectorGoogle = z.infer<
+  typeof ApiBookingConnectorGoogleModel
+>;
+
 export const ApiBookingConnectorBokaMeraConfigModel = z.object({
   api_base_url: z.string(),
   api_token_url: z.string(),
@@ -804,6 +819,7 @@ export type ApiBookingConnectorBokaMera = z.infer<
 export const ApiBookingConnectorModel = z.discriminatedUnion('driver_type', [
   ApiBookingConnectorWipModel,
   ApiBookingConnectorBokaMeraModel,
+  ApiBookingConnectorGoogleModel,
 ]);
 export type ApiBookingConnector = z.infer<typeof ApiBookingConnectorModel>;
 
