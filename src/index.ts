@@ -61,7 +61,7 @@ export const ApiBookingTagModel = ApiTagBaseModel.extend({
   resource_id: z.string(),
   resource_source_id: z.string(),
   resource_name: z.string(),
-  current_date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+  current_date: z.string(),
   current_event: ApiBookingTagEventModel.optional(),
   next_slot: ApiBookingTagNextSlotModel.optional(),
   bar_bitmask: z.bigint(),
