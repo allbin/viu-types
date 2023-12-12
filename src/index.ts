@@ -4,8 +4,6 @@ export * as GeoJSON from './geojson';
 
 const auth0UserIdRegex = /^auth0\|[a-f0-9]{24}$/;
 
-//TODO: Add currently missing future fields to Tag related models.
-
 export const ApiTagBaseModel = z.object({
   id: z.string(),
   network_id: z.string(),
@@ -45,9 +43,17 @@ export type ApiBookingTagDriverType = z.infer<
 export const ApiBookingTagEventModel = z.object({
   from: z.string().datetime(),
   to: z.string().datetime(),
-  contact: z.string(),
+  contact_primary: z.string(),
+  contact_secondary: z.string().optional(),
+  contact_tertiary: z.string().optional(),
 });
 export type ApiBookingTagEvent = z.infer<typeof ApiBookingTagEventModel>;
+
+export const ApiBookingTagNextSlotModel = z.object({
+  type: z.enum(['event', 'free']),
+  from: z.string().datetime(),
+});
+export type ApiBookingTagNextSlot = z.infer<typeof ApiBookingTagNextSlotModel>;
 
 export const ApiBookingTagModel = ApiTagBaseModel.extend({
   type: z.literal('bookingtag'),
@@ -55,8 +61,12 @@ export const ApiBookingTagModel = ApiTagBaseModel.extend({
   resource_id: z.string(),
   resource_source_id: z.string(),
   resource_name: z.string(),
-  events: z.array(ApiBookingTagEventModel),
+  current_date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+  current_event: ApiBookingTagEventModel.optional(),
+  next_slot: ApiBookingTagNextSlotModel.optional(),
+  bar_bitmask: z.bigint(),
 });
+
 export type ApiBookingTag = z.infer<typeof ApiBookingTagModel>;
 
 export const ApiBookingTagInstallationRequestModel = z.object({
