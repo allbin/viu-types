@@ -67,6 +67,17 @@ export const ApiBookingTagModel = ApiTagBaseModel.extend({
   bar_bitmask: z.bigint(),
 });
 
+export const ApiBookingTagHashableFieldsModel = ApiBookingTagModel.pick({
+  resource_name: true,
+  current_date: true,
+  current_event: true,
+  next_slot: true,
+  bar_bitmask: true,
+});
+export type ApiBookingTagHashableFields = z.infer<
+  typeof ApiBookingTagHashableFieldsModel
+>;
+
 export type ApiBookingTag = z.infer<typeof ApiBookingTagModel>;
 
 export const ApiBookingTagInstallationRequestModel = z.object({
