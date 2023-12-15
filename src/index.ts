@@ -49,10 +49,33 @@ export const ApiBookingTagEventModel = z.object({
 });
 export type ApiBookingTagEvent = z.infer<typeof ApiBookingTagEventModel>;
 
-export const ApiBookingTagNextSlotModel = z.object({
-  type: z.enum(['event', 'free']),
+export const ApiBookingTagNextSlotBaseModel = z.object({
   from: z.string().datetime(),
 });
+
+export const ApiBookingTagNextSlotFreeModel =
+  ApiBookingTagNextSlotBaseModel.extend({
+    type: z.literal('free'),
+    from: z.string().datetime(),
+  });
+export type ApiBookingTagNextSlotFree = z.infer<
+  typeof ApiBookingTagNextSlotFreeModel
+>;
+
+export const ApiBookingTagNextSlotEventModel =
+  ApiBookingTagNextSlotBaseModel.extend({
+    type: z.literal('event'),
+    from: z.string().datetime(),
+    to: z.string().datetime(),
+  });
+export type ApiBookingTagNextSlotEvent = z.infer<
+  typeof ApiBookingTagNextSlotEventModel
+>;
+
+export const ApiBookingTagNextSlotModel = z.discriminatedUnion('type', [
+  ApiBookingTagNextSlotFreeModel,
+  ApiBookingTagNextSlotEventModel,
+]);
 export type ApiBookingTagNextSlot = z.infer<typeof ApiBookingTagNextSlotModel>;
 
 export const ApiBookingTagModel = ApiTagBaseModel.extend({
@@ -63,7 +86,7 @@ export const ApiBookingTagModel = ApiTagBaseModel.extend({
   resource_name: z.string(),
   current_date: z.string(),
   current_event: ApiBookingTagEventModel.optional(),
-  next_slot: ApiBookingTagNextSlotModel.optional(),
+  next_slot: ApiBookingTagNextSlotBaseModel.optional(),
   bar_bitmask: z.bigint(),
 });
 
