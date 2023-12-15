@@ -43,8 +43,6 @@ export type ApiBookingTagDriverType = z.infer<
 export const ApiBookingTagEventModel = z.object({
   from: z.string().datetime(),
   to: z.string().datetime(),
-  bar_from_index: z.number(),
-  bar_to_index: z.number(),
   contact_primary: z.string(),
   contact_secondary: z.string().optional(),
   contact_tertiary: z.string().optional(),
@@ -80,6 +78,13 @@ export const ApiBookingTagNextSlotModel = z.discriminatedUnion('type', [
 ]);
 export type ApiBookingTagNextSlot = z.infer<typeof ApiBookingTagNextSlotModel>;
 
+export const ApiBookingTagTimelineModel = z.object({
+  bitmask: z.bigint(),
+  current_from_index: z.number().optional(),
+  current_to_index: z.number().optional(),
+});
+export type ApiBookingTagTimeline = z.infer<typeof ApiBookingTagTimelineModel>;
+
 export const ApiBookingTagModel = ApiTagBaseModel.extend({
   type: z.literal('bookingtag'),
   connector_id: z.string(),
@@ -89,7 +94,7 @@ export const ApiBookingTagModel = ApiTagBaseModel.extend({
   current_date: z.string(),
   current_event: ApiBookingTagEventModel.optional(),
   next_slot: ApiBookingTagNextSlotModel.optional(),
-  bar_bitmask: z.bigint(),
+  timeline: ApiBookingTagTimelineModel,
 });
 
 export type ApiBookingTag = z.infer<typeof ApiBookingTagModel>;
