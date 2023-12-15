@@ -43,6 +43,8 @@ export type ApiBookingTagDriverType = z.infer<
 export const ApiBookingTagEventModel = z.object({
   from: z.string().datetime(),
   to: z.string().datetime(),
+  bar_from_index: z.number(),
+  bar_to_index: z.number(),
   contact_primary: z.string(),
   contact_secondary: z.string().optional(),
   contact_tertiary: z.string().optional(),
