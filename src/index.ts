@@ -92,6 +92,7 @@ export const ApiBookingTagModel = ApiTagBaseModel.extend({
   resource_source_id: z.string(),
   resource_name: z.string(),
   current_date: z.string(),
+  timezone: z.string(),
   current_event: ApiBookingTagEventModel.optional(),
   next_slot: ApiBookingTagNextSlotModel.optional(),
   timeline: ApiBookingTagTimelineModel,
