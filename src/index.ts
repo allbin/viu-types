@@ -239,6 +239,7 @@ export type ApiApartmentUpdatedEvent = z.infer<
 export const ApiAttachmentCategoryModel = z.enum([
   'energy-declaration-ovk',
   'property-info',
+  'restaurant-menu',
   'other',
 ]);
 export type ApiAttachmentCategory = z.infer<typeof ApiAttachmentCategoryModel>;
