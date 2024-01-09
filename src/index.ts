@@ -30,14 +30,14 @@ export type ApiNameTagInstallationRequest = z.infer<
   typeof ApiNameTagInstallationRequestModel
 >;
 
-export const ApiBookingTagDriverTypeModel = z.enum([
+export const ApiConnectorDriverTypeModel = z.enum([
   'wip',
   'bokamera',
-  'google',
-  'microsoft',
+  'google-calendar',
+  'microsoft-outlook',
 ]);
-export type ApiBookingTagDriverType = z.infer<
-  typeof ApiBookingTagDriverTypeModel
+export type ApiConnectorDriverType = z.infer<
+  typeof ApiConnectorDriverTypeModel
 >;
 
 export const ApiBookingTagEventModel = z.object({
@@ -784,86 +784,90 @@ export const ApiBookingTagResourceModel = z.object({
 });
 export type ApiBookingTagResource = z.infer<typeof ApiBookingTagResourceModel>;
 
-export const ApiBookingConnectorRequestModel = z.object({
-  id: z.string().uuid(),
-  organization_id: z.string(),
-  driver_type: ApiBookingTagDriverTypeModel,
-  name: z.string(),
-  config: z.unknown(),
-});
-export type ApiBookingConnectorRequest = z.infer<
-  typeof ApiBookingConnectorRequestModel
->;
-
-export const ApiBookingConnectorBaseModel = z.object({
+export const ApiConnectorBaseModel = z.object({
   id: z.string().uuid(),
   organization_id: z.string(),
   meta: ApiMetadataModel,
   name: z.string(),
+  config: z.unknown(),
+});
+export type ApiConnectorBase = z.infer<typeof ApiConnectorBaseModel>;
+
+export const ApiConnectorBookingConfigModel = z.object({
+  booking_url: z.string().optional(),
 });
 
-export const ApiPublicBookingConnectorModel = z.object({
-  id: z.string().uuid(),
-  name: z.string(),
-  driver_type: ApiBookingTagDriverTypeModel,
-});
-export type ApiPublicBookingConnector = z.infer<
-  typeof ApiPublicBookingConnectorModel
->;
+export const ApiConnectorWipConfigModel = ApiConnectorBookingConfigModel.extend(
+  { calendar_base_url: z.string() },
+);
 
-export const ApiBookingConnectorWipConfigModel = z.object({
-  calendar_base_url: z.string(),
-});
-
-export const ApiBookingConnectorWipModel = ApiBookingConnectorBaseModel.extend({
+export const ApiConnectorWipModel = ApiConnectorBaseModel.extend({
   driver_type: z.literal('wip'),
-  config: ApiBookingConnectorWipConfigModel,
+  config: ApiConnectorWipConfigModel,
 });
+export type ApiConnectorWip = z.infer<typeof ApiConnectorWipModel>;
 
-export const ApiBookingConnectorGoogleConfigModel = z.object({
-  private_key: z.string(),
-  client_email: z.string(),
-  customer_id: z.string(),
-});
-
-export const ApiBookingConnectorGoogleModel =
-  ApiBookingConnectorBaseModel.extend({
-    driver_type: z.literal('google'),
-    config: ApiBookingConnectorGoogleConfigModel,
+export const ApiConnectorGoogleCalendarConfigModel =
+  ApiConnectorBookingConfigModel.extend({
+    private_key: z.string(),
+    client_email: z.string(),
+    customer_id: z.string(),
   });
-export type ApiBookingConnectorGoogle = z.infer<
-  typeof ApiBookingConnectorGoogleModel
+
+export const ApiConnectorGoogleCalendarModel = ApiConnectorBaseModel.extend({
+  driver_type: z.literal('google-calendar'),
+  config: ApiConnectorGoogleCalendarConfigModel,
+});
+export type ApiConnectorGoogleCalendar = z.infer<
+  typeof ApiConnectorGoogleCalendarModel
 >;
 
-export const ApiBookingConnectorBokaMeraConfigModel = z.object({
-  api_base_url: z.string(),
-  api_token_url: z.string(),
-  api_key: z.string(),
-  client_id: z.string(),
-  username: z.string(),
-  password: z.string(),
-  access_token: z.string().optional(),
-  refresh_token: z.string().optional(),
-});
+export const ApiConnectorBokaMeraConfigModel =
+  ApiConnectorBookingConfigModel.extend({
+    api_base_url: z.string(),
+    api_token_url: z.string(),
+    api_key: z.string(),
+    client_id: z.string(),
+    username: z.string(),
+    password: z.string(),
+    access_token: z.string().optional(),
+    refresh_token: z.string().optional(),
+  });
 export type ApiBookingConnectorBokaMeraConfig = z.infer<
-  typeof ApiBookingConnectorBokaMeraConfigModel
+  typeof ApiConnectorBokaMeraConfigModel
 >;
 
-export const ApiBookingConnectorBokaMeraModel =
-  ApiBookingConnectorBaseModel.extend({
-    driver_type: z.literal('bokamera'),
-    config: ApiBookingConnectorBokaMeraConfigModel,
-  });
+export const ApiConnectorBokaMeraModel = ApiConnectorBaseModel.extend({
+  driver_type: z.literal('bokamera'),
+  config: ApiConnectorBokaMeraConfigModel,
+});
 export type ApiBookingConnectorBokaMera = z.infer<
-  typeof ApiBookingConnectorBokaMeraModel
+  typeof ApiConnectorBokaMeraModel
 >;
 
-export const ApiBookingConnectorModel = z.discriminatedUnion('driver_type', [
-  ApiBookingConnectorWipModel,
-  ApiBookingConnectorBokaMeraModel,
-  ApiBookingConnectorGoogleModel,
+export const ApiConnectorModel = z.discriminatedUnion('driver_type', [
+  ApiConnectorWipModel,
+  ApiConnectorBokaMeraModel,
+  ApiConnectorGoogleCalendarModel,
 ]);
-export type ApiBookingConnector = z.infer<typeof ApiBookingConnectorModel>;
+export type ApiConnector = z.infer<typeof ApiConnectorModel>;
+
+export const ApiPublicConnectorModel = ApiConnectorBaseModel.pick({
+  id: true,
+  name: true,
+}).extend({
+  driver_type: ApiConnectorDriverTypeModel,
+});
+export type ApiPublicConnector = z.infer<typeof ApiPublicConnectorModel>;
+
+export const ApiConnectorRequestModel = ApiConnectorBaseModel.pick({
+  id: true,
+  organization_id: true,
+  name: true,
+}).extend({
+  driver_type: ApiConnectorDriverTypeModel,
+});
+export type ApiConnectorRequest = z.infer<typeof ApiConnectorRequestModel>;
 
 export const ApiGeoJSONModel = z.discriminatedUnion('type', [
   GeoJSON.FeatureCollectionModel,
