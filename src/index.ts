@@ -903,6 +903,18 @@ export type ApiConnectorGoogleCalendarCreationRequest = z.infer<
   typeof ApiConnectorGoogleCalendarCreationRequestModel
 >;
 
+export const ApiConnectorCreationRequestModel = z.discriminatedUnion(
+  'driver_type',
+  [
+    ApiConnectorWipCreationRequestModel,
+    ApiConnectorBokaMeraCreationRequestModel,
+    ApiConnectorGoogleCalendarCreationRequestModel,
+  ],
+);
+export type ApiConnectorCreationRequest = z.infer<
+  typeof ApiConnectorCreationRequestModel
+>;
+
 export const ApiGeoJSONModel = z.discriminatedUnion('type', [
   GeoJSON.FeatureCollectionModel,
   GeoJSON.FeatureModel,
