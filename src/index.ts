@@ -796,10 +796,14 @@ export type ApiConnectorBase = z.infer<typeof ApiConnectorBaseModel>;
 export const ApiConnectorBookingConfigModel = z.object({
   booking_url: z.string().optional(),
 });
+export type ApiConnectorBookingConfig = z.infer<
+  typeof ApiConnectorBookingConfigModel
+>;
 
 export const ApiConnectorWipConfigModel = ApiConnectorBookingConfigModel.extend(
   { calendar_base_url: z.string() },
 );
+export type ApiConnectorWipConfig = z.infer<typeof ApiConnectorWipConfigModel>;
 
 export const ApiConnectorWipModel = ApiConnectorBaseModel.extend({
   driver_type: z.literal('wip'),
@@ -813,6 +817,9 @@ export const ApiConnectorGoogleCalendarConfigModel =
     client_email: z.string(),
     customer_id: z.string(),
   });
+export type ApiConnectorGoogleCalendarConfig = z.infer<
+  typeof ApiConnectorGoogleCalendarConfigModel
+>;
 
 export const ApiConnectorGoogleCalendarModel = ApiConnectorBaseModel.extend({
   driver_type: z.literal('google-calendar'),
