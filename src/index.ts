@@ -876,6 +876,33 @@ export const ApiConnectorRequestModel = ApiConnectorBaseModel.pick({
 });
 export type ApiConnectorRequest = z.infer<typeof ApiConnectorRequestModel>;
 
+export const ApiConnectorWipCreationRequestModel =
+  ApiConnectorRequestModel.omit({ id: true, driver_type: true }).extend({
+    driver_type: z.literal('wip'),
+    config: ApiConnectorWipConfigModel,
+  });
+export type ApiConnectorWipCreationRequest = z.infer<
+  typeof ApiConnectorWipCreationRequestModel
+>;
+
+export const ApiConnectorBokaMeraCreationRequestModel =
+  ApiConnectorRequestModel.omit({ id: true, driver_type: true }).extend({
+    driver_type: z.literal('bokamera'),
+    config: ApiConnectorBokaMeraConfigModel,
+  });
+export type ApiConnectorBokaMeraCreationRequest = z.infer<
+  typeof ApiConnectorBokaMeraCreationRequestModel
+>;
+
+export const ApiConnectorGoogleCalendarCreationRequestModel =
+  ApiConnectorRequestModel.omit({ id: true, driver_type: true }).extend({
+    driver_type: z.literal('google-calendar'),
+    config: ApiConnectorGoogleCalendarConfigModel,
+  });
+export type ApiConnectorGoogleCalendarCreationRequest = z.infer<
+  typeof ApiConnectorGoogleCalendarCreationRequestModel
+>;
+
 export const ApiGeoJSONModel = z.discriminatedUnion('type', [
   GeoJSON.FeatureCollectionModel,
   GeoJSON.FeatureModel,
