@@ -10,6 +10,7 @@ export const ApiTagBaseModel = z.object({
   organization_id: z.string(),
   last_gateway_id: z.string(),
   last_heartbeat_at: z.string().datetime(),
+  scan_action: z.boolean().optional(),
 });
 export type ApiTagBase = z.infer<typeof ApiTagBaseModel>;
 
