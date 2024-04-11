@@ -321,7 +321,7 @@ export type ApiDeviceCreationEvent = z.infer<
   typeof ApiDeviceCreationEventModel
 >;
 
-export const ApiDeviceTypeModel = z.literal('eloview');
+export const ApiDeviceTypeModel = z.enum(['eloview', 'gateway']);
 export type ApiDeviceType = z.infer<typeof ApiDeviceTypeModel>;
 
 export const ApiDeviceStateModel = z.enum(['created', 'installed']);
