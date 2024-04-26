@@ -185,13 +185,75 @@ export const ApiAnnouncementModel = ApiUuidEntityModel.merge(
 );
 export type ApiAnnouncement = z.infer<typeof ApiAnnouncementModel>;
 
-export const ApiTenantModel = z.object({
+export const ApiCompanyContactModel = z.object({
+  name: z.string(),
+  email: z.string().email().optional(),
+  phone: z
+    .string()
+    .regex(/^\+?[0-9 -]+$/)
+    .optional(),
+  title: z.string().optional(),
+});
+export type ApiCompanyContact = z.infer<typeof ApiCompanyContactModel>;
+
+export const ApiCompanyModel = z.object({
+  id: z.string().uuid(),
+  name: z.string(),
+  description: z.string().optional(),
+  contacts: z.array(ApiCompanyContactModel),
+  url: z.string().url().optional(),
+  logo: z.string().url().optional(),
+});
+
+export type ApiCompany = z.infer<typeof ApiCompanyModel>;
+
+export const ApiTenantExtraResidentialModel = z.object({
+  type: z.literal('individual'),
+});
+
+export type ApiTenantExtraResidential = z.infer<
+  typeof ApiTenantExtraResidentialModel
+>;
+
+export const ApiTenantExtraCommercialModel = z.object({
+  type: z.literal('company'),
+  company: ApiCompanyModel,
+});
+export type ApiTenantExtraCommercial = z.infer<
+  typeof ApiTenantExtraCommercialModel
+>;
+
+export const ApiTenantExtrasModel = z.discriminatedUnion('type', [
+  ApiTenantExtraResidentialModel,
+  ApiTenantExtraCommercialModel,
+]);
+export type ApiTenantExtras = z.infer<typeof ApiTenantExtrasModel>;
+
+export const ApiTenantBaseModel = z.object({
   id: z.string().uuid(),
   first_name: z.string(),
   last_name: z.string().optional(),
   active_from: z.string().datetime().optional(),
   active_to: z.string().datetime().optional(),
 });
+
+export type ApiTenantBase = z.infer<typeof ApiTenantBaseModel>;
+
+export const ApiCompanyTenantModel = ApiTenantBaseModel.extend({
+  type: z.literal('company'),
+  company: ApiCompanyModel,
+});
+export type ApiCompanyTenant = z.infer<typeof ApiCompanyTenantModel>;
+
+export const ApiIndividualTenantModel = ApiTenantBaseModel.extend({
+  type: z.literal('individual'),
+});
+export type ApiIndividualTenant = z.infer<typeof ApiIndividualTenantModel>;
+
+export const ApiTenantModel = z.discriminatedUnion('type', [
+  ApiCompanyTenantModel,
+  ApiIndividualTenantModel,
+]);
 export type ApiTenant = z.infer<typeof ApiTenantModel>;
 
 export const ApiPublicApartmentModel = z.object({
@@ -922,92 +984,73 @@ export const ApiGeoJSONModel = z.discriminatedUnion('type', [
 ]);
 export type ApiGeoJSON = z.infer<typeof ApiGeoJSONModel>;
 
-export const ApiCompanyContactModel = z.object({
-  name: z.string(),
-  email: z.string().email().optional(),
-  phone: z
-    .string()
-    .regex(/^\+?[0-9 -]+$/)
-    .optional(),
-  title: z.string().optional(),
-  image: z.string().url().optional(),
-});
-export type ApiCompanyContact = z.infer<typeof ApiCompanyContactModel>;
-
-export const ApiCompanyModel = z.object({
-  id: z.string().uuid(),
-  name: z.string(),
-  description: z.string().optional(),
-  contacts: z.array(ApiCompanyContactModel),
-  logo: z.string().url().optional(),
-});
-
-export type ApiCompany = z.infer<typeof ApiCompanyModel>;
-
 export const ApiFloorModel = z.object({
   id: z.string().uuid(),
   location_id: z.string().uuid(),
   level: z.number(),
   level_label: z.string().optional(),
   floor_plan: z.string().url().optional(),
-  unit_geojson: ApiGeoJSONModel.optional(),
+  objects: GeoJSON.FeatureCollectionModel.optional(),
 });
 export type ApiFloor = z.infer<typeof ApiFloorModel>;
 
-export const ApiUnitTenantIndividualModel = z.object({
-  id: z.string().uuid(),
-  type: z.literal('individual'),
-  first_name: z.string(),
-  last_name: z.string().optional(),
-  active_from: z.string().datetime(),
-  active_to: z.string().datetime().optional(),
-});
-export type ApiUnitTenantIndividual = z.infer<
-  typeof ApiUnitTenantIndividualModel
->;
-
-export const ApiUnitTenantCompanyModel = z.object({
-  id: z.string().uuid(),
-  type: z.literal('company'),
-  company: ApiCompanyModel,
-  active_from: z.string().datetime(),
-  active_to: z.string().datetime().optional(),
-});
-export type ApiUnitTenantCompany = z.infer<typeof ApiUnitTenantCompanyModel>;
-
-export const ApiUnitTenantModel = z.discriminatedUnion('type', [
-  ApiUnitTenantIndividualModel,
-  ApiUnitTenantCompanyModel,
-]);
-export type ApiUnitTenant = z.infer<typeof ApiUnitTenantModel>;
-
-export const ApiUnitBookingInfoModel = z.object({
+export const ApiBookableResourceRefModel = z.object({
   connector_id: z.string().uuid(),
   /** <connector_id:resource_source_id> */
   resource_id: z.string(),
 });
-export type ApiUnitBookingInfo = z.infer<typeof ApiUnitBookingInfoModel>;
+export type ApiBookableResourceRef = z.infer<
+  typeof ApiBookableResourceRefModel
+>;
 
-export const ApiUnitModel = z.object({
+const ApiUnitBaseModel = z.object({
   id: z.string().uuid(),
   floor_id: z.string().uuid(),
-  tenants: z.array(ApiUnitTenantModel),
-  booking: ApiUnitBookingInfoModel.optional(),
+  label: z.string(),
+  services: z.string().array(),
 });
+
+const ApiUnitResidentialModel = ApiUnitBaseModel.extend({
+  object_id: z.string(),
+  type: z.literal('residential'),
+  tenants: z.array(ApiIndividualTenantModel),
+});
+export type ApiUnitResidential = z.infer<typeof ApiUnitResidentialModel>;
+
+const ApiUnitCommercialModel = ApiUnitBaseModel.extend({
+  type: z.literal('commercial'),
+  tenants: z.array(ApiCompanyTenantModel),
+});
+export type ApiUnitCommercial = z.infer<typeof ApiUnitCommercialModel>;
+
+export const ApiUnitModel = z.discriminatedUnion('type', [
+  ApiUnitResidentialModel,
+  ApiUnitCommercialModel,
+]);
 export type ApiUnit = z.infer<typeof ApiUnitModel>;
 
 export const ApiAreaModel = z.object({
   id: z.string().uuid(),
   name: z.string(),
-  area_geojson: ApiGeoJSONModel,
 });
 export type ApiArea = z.infer<typeof ApiAreaModel>;
 
+export const ApiServiceResourceModel = z.object({
+  name: z.string(),
+  booking_ref: z.array(ApiBookableResourceRefModel).optional(),
+});
+export type ApiServiceResource = z.infer<typeof ApiServiceResourceModel>;
+
 export const ApiServiceModel = z.object({
   id: z.string().uuid(),
-  area_id: z.string().uuid(),
+  areas: z.string().uuid().array(),
   type: z.string(),
   name: z.string(),
+
+  floor_id: z.string().uuid().optional(),
+  unit_id: z.string().uuid().optional(),
+
+  description: z.string().optional(),
   equipment: z.array(z.string()),
   photo: z.string().url().optional(),
 });
