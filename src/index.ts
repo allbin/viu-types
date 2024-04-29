@@ -984,12 +984,16 @@ export const ApiGeoJSONModel = z.discriminatedUnion('type', [
 ]);
 export type ApiGeoJSON = z.infer<typeof ApiGeoJSONModel>;
 
-export const ApiFloorRequestModel = z.object({
-  location_id: z.string().uuid(),
+export const ApiFloorUpdateRequestModel = z.object({
   level: z.number(),
   level_label: z.string().optional(),
   floor_plan: z.string().url().optional(),
   objects: GeoJSON.FeatureCollectionModel.optional(),
+});
+export type ApiFloorUpdateRequest = z.infer<typeof ApiFloorUpdateRequestModel>;
+
+export const ApiFloorRequestModel = ApiFloorUpdateRequestModel.extend({
+  location_id: z.string().uuid(),
 });
 export type ApiFloorRequest = z.infer<typeof ApiFloorRequestModel>;
 
@@ -1009,11 +1013,15 @@ export type ApiBookableResourceRef = z.infer<
   typeof ApiBookableResourceRefModel
 >;
 
-const ApiUnitRequestModel = z.object({
-  floor_id: z.string().uuid(),
+export const ApiUnitUpdateRequestModel = z.object({
   label: z.string(),
   object_id: z.string().optional(),
   tenants: z.array(ApiTenantModel),
+});
+export type ApiUnitUpdateRequest = z.infer<typeof ApiUnitUpdateRequestModel>;
+
+const ApiUnitRequestModel = ApiUnitUpdateRequestModel.extend({
+  floor_id: z.string().uuid(),
 });
 export type ApiUnitRequest = z.infer<typeof ApiUnitRequestModel>;
 
