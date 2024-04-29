@@ -986,6 +986,7 @@ export type ApiGeoJSON = z.infer<typeof ApiGeoJSONModel>;
 
 export const ApiFloorModel = z.object({
   id: z.string().uuid(),
+  organization_id: z.string(),
   location_id: z.string().uuid(),
   level: z.number(),
   level_label: z.string().optional(),
@@ -1005,9 +1006,9 @@ export type ApiBookableResourceRef = z.infer<
 
 const ApiUnitBaseModel = z.object({
   id: z.string().uuid(),
+  organization_id: z.string(),
   floor_id: z.string().uuid(),
   label: z.string(),
-  services: z.string().array(),
 });
 
 const ApiUnitResidentialModel = ApiUnitBaseModel.extend({
@@ -1029,11 +1030,12 @@ export const ApiUnitModel = z.discriminatedUnion('type', [
 ]);
 export type ApiUnit = z.infer<typeof ApiUnitModel>;
 
-export const ApiAreaModel = z.object({
+export const ApiServiceTagModel = z.object({
   id: z.string().uuid(),
+  organization_id: z.string(),
   name: z.string(),
 });
-export type ApiArea = z.infer<typeof ApiAreaModel>;
+export type ApiServiceTag = z.infer<typeof ApiServiceTagModel>;
 
 export const ApiServiceResourceModel = z.object({
   name: z.string(),
@@ -1043,15 +1045,19 @@ export type ApiServiceResource = z.infer<typeof ApiServiceResourceModel>;
 
 export const ApiServiceModel = z.object({
   id: z.string().uuid(),
-  areas: z.string().uuid().array(),
+  organization_id: z.string(),
   type: z.string(),
   name: z.string(),
 
+  resources: z.array(ApiServiceResourceModel),
+
+  tags: z.string().uuid(),
+  equipment: z.string().array(),
+
+  location_id: z.string().uuid().optional(),
   floor_id: z.string().uuid().optional(),
-  unit_id: z.string().uuid().optional(),
 
   description: z.string().optional(),
-  equipment: z.array(z.string()),
   photo: z.string().url().optional(),
 });
 export type ApiService = z.infer<typeof ApiServiceModel>;
