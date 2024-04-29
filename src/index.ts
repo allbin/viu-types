@@ -265,7 +265,7 @@ export const ApiApartmentRequestModel = z.object({
   location_id: z.string().uuid(),
   unit: z.string(),
   floor: z.number(),
-  tenants: ApiTenantModel.array(),
+  tenants: ApiTenantBaseModel.array(),
   source_id: z.string().optional(),
 });
 export type ApiApartmentRequest = z.infer<typeof ApiApartmentRequestModel>;
