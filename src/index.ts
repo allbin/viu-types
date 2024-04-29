@@ -618,105 +618,6 @@ export const ApiErrorModel = z.object({
 });
 export type ApiError = z.infer<typeof ApiErrorModel>;
 
-export const ApiLocationCreatedEventModel = z.object({
-  type: z.literal('location_created'),
-  data: ApiLocationRequestModel,
-});
-export type ApiLocationCreatedEvent = z.infer<
-  typeof ApiLocationCreatedEventModel
->;
-
-export const ApiLocationDeletedEventModel = z.object({
-  type: z.literal('location_deleted'),
-});
-export type ApiLocationDeletedEvent = z.infer<
-  typeof ApiLocationDeletedEventModel
->;
-
-export const ApiLocationDeviceEventDataModel = z.object({
-  device_id: z.string(),
-});
-export type ApiLocationDeviceEventData = z.infer<
-  typeof ApiLocationDeviceEventDataModel
->;
-
-export const ApiLocationDeviceInstalledEventModel = z.object({
-  type: z.literal('device_installed'),
-  data: ApiLocationDeviceEventDataModel,
-});
-export type ApiLocationDeviceInstalledEvent = z.infer<
-  typeof ApiLocationDeviceInstalledEventModel
->;
-
-export const ApiLocationDeviceUninstalledEventModel = z.object({
-  type: z.literal('device_uninstalled'),
-  data: ApiLocationDeviceEventDataModel,
-});
-export type ApiLocationDeviceUninstalledEvent = z.infer<
-  typeof ApiLocationDeviceUninstalledEventModel
->;
-
-export const ApiLocationUpdatedEventModel = z.object({
-  type: z.literal('location_updated'),
-  data: ApiLocationRequestModel,
-});
-export type ApiLocationUpdatedEvent = z.infer<
-  typeof ApiLocationUpdatedEventModel
->;
-
-export const ApiTenantMovedEventDataModel = z.object({
-  name: z.string(),
-});
-export type ApiTenantMovedEventData = z.infer<
-  typeof ApiTenantMovedEventDataModel
->;
-
-export const ApiTenantMovedInEventModel = z.object({
-  type: z.literal('tenant_moved_in'),
-  data: ApiTenantMovedEventDataModel,
-});
-export type ApiTenantMovedInEvent = z.infer<typeof ApiTenantMovedInEventModel>;
-
-export const ApiTenantMovedOutEventModel = z.object({
-  type: z.literal('tenant_moved_out'),
-  data: ApiTenantMovedEventDataModel,
-});
-export type ApiTenantMovedOutEvent = z.infer<
-  typeof ApiTenantMovedOutEventModel
->;
-
-export const ApiLocationEventRequestModel = z
-  .object({
-    location_id: z.string().uuid(),
-  })
-  .and(
-    z.discriminatedUnion('type', [
-      ApiLocationDeviceInstalledEventModel,
-      ApiLocationDeviceUninstalledEventModel,
-      ApiLocationCreatedEventModel,
-      ApiLocationUpdatedEventModel,
-      ApiLocationDeletedEventModel,
-      ApiApartmentCreatedEventModel,
-      ApiApartmentUpdatedEventModel,
-      ApiAnnouncementLinkedEventModel,
-      ApiAnnouncementUnlinkedEventModel,
-      ApiAttachmentLinkedEventModel,
-      ApiAttachmentUnlinkedEventModel,
-      ApiEmbeddedUrlLinkedEventModel,
-      ApiEmbeddedUrlUnlinkedEventModel,
-      ApiTenantMovedInEventModel,
-      ApiTenantMovedOutEventModel,
-    ]),
-  );
-export type ApiLocationEventRequest = z.infer<
-  typeof ApiLocationEventRequestModel
->;
-
-export const ApiLocationEventModel = ApiStringEntityModel.and(
-  ApiLocationEventRequestModel,
-);
-export type ApiLocationEvent = z.infer<typeof ApiLocationEventModel>;
-
 export const ApiSynchronizedTypeModel = z.enum([
   'announcements',
   'apartments',
@@ -1072,3 +973,189 @@ export const ApiServiceModel = ApiServiceRequestModel.extend({
   meta: ApiMetadataModel,
 });
 export type ApiService = z.infer<typeof ApiServiceModel>;
+
+export const ApiLocationCreatedEventModel = z.object({
+  type: z.literal('location_created'),
+  data: ApiLocationRequestModel,
+});
+export type ApiLocationCreatedEvent = z.infer<
+  typeof ApiLocationCreatedEventModel
+>;
+
+export const ApiLocationDeletedEventModel = z.object({
+  type: z.literal('location_deleted'),
+});
+export type ApiLocationDeletedEvent = z.infer<
+  typeof ApiLocationDeletedEventModel
+>;
+
+export const ApiLocationDeviceEventDataModel = z.object({
+  device_id: z.string(),
+});
+export type ApiLocationDeviceEventData = z.infer<
+  typeof ApiLocationDeviceEventDataModel
+>;
+
+export const ApiLocationDeviceInstalledEventModel = z.object({
+  type: z.literal('device_installed'),
+  data: ApiLocationDeviceEventDataModel,
+});
+export type ApiLocationDeviceInstalledEvent = z.infer<
+  typeof ApiLocationDeviceInstalledEventModel
+>;
+
+export const ApiLocationDeviceUninstalledEventModel = z.object({
+  type: z.literal('device_uninstalled'),
+  data: ApiLocationDeviceEventDataModel,
+});
+export type ApiLocationDeviceUninstalledEvent = z.infer<
+  typeof ApiLocationDeviceUninstalledEventModel
+>;
+
+export const ApiLocationUpdatedEventModel = z.object({
+  type: z.literal('location_updated'),
+  data: ApiLocationRequestModel,
+});
+export type ApiLocationUpdatedEvent = z.infer<
+  typeof ApiLocationUpdatedEventModel
+>;
+
+export const ApiTenantMovedEventDataModel = z.object({
+  name: z.string(),
+});
+export type ApiTenantMovedEventData = z.infer<
+  typeof ApiTenantMovedEventDataModel
+>;
+
+export const ApiTenantMovedInEventModel = z.object({
+  type: z.literal('tenant_moved_in'),
+  data: ApiTenantMovedEventDataModel,
+});
+export type ApiTenantMovedInEvent = z.infer<typeof ApiTenantMovedInEventModel>;
+
+export const ApiTenantMovedOutEventModel = z.object({
+  type: z.literal('tenant_moved_out'),
+  data: ApiTenantMovedEventDataModel,
+});
+export type ApiTenantMovedOutEvent = z.infer<
+  typeof ApiTenantMovedOutEventModel
+>;
+
+export const ApiFloorCreatedEventDataModel = z.object({
+  floor: ApiFloorRequestModel,
+});
+export type ApiFloorCreatedEventData = z.infer<
+  typeof ApiFloorCreatedEventDataModel
+>;
+
+export const ApiFloorCreatedEventModel = z.object({
+  type: z.literal('floor_created'),
+  data: ApiFloorCreatedEventDataModel,
+});
+
+export const ApiFloorDeletedEventDataModel = z.object({
+  level: z.number(),
+});
+export type ApiFloorDeletedEventData = z.infer<
+  typeof ApiFloorDeletedEventDataModel
+>;
+
+export const ApiFloorDeletedEventModel = z.object({
+  type: z.literal('floor_deleted'),
+  data: ApiFloorDeletedEventDataModel,
+});
+
+export const ApiUnitCreatedEventDataModel = z.object({
+  unit: ApiUnitRequestModel,
+});
+export type ApiUnitCreatedEventData = z.infer<
+  typeof ApiUnitCreatedEventDataModel
+>;
+
+export const ApiUnitCreatedEventModel = z.object({
+  type: z.literal('unit_created'),
+  data: ApiUnitCreatedEventDataModel,
+});
+export type ApiUnitCreatedEvent = z.infer<typeof ApiUnitCreatedEventModel>;
+
+export const ApiUnitDeletedEventDataModel = z.object({
+  object_id: z.string().optional(),
+});
+export type ApiUnitDeletedEventData = z.infer<
+  typeof ApiUnitDeletedEventDataModel
+>;
+
+export const ApiUnitDeletedEventModel = z.object({
+  type: z.literal('unit_deleted'),
+  data: ApiUnitDeletedEventDataModel,
+});
+export type ApiUnitDeletedEvent = z.infer<typeof ApiUnitDeletedEventModel>;
+
+export const ApiServiceCreatedEventDataModel = z.object({
+  service: ApiServiceRequestModel,
+});
+export type ApiServiceCreatedEventData = z.infer<
+  typeof ApiServiceCreatedEventDataModel
+>;
+
+export const ApiServiceCreatedEventModel = z.object({
+  type: z.literal('service_created'),
+  data: ApiServiceCreatedEventDataModel,
+});
+export type ApiServiceCreatedEvent = z.infer<
+  typeof ApiServiceCreatedEventModel
+>;
+
+export const ApiServiceDeletedEventDataModel = z.object({
+  type: z.string(),
+  name: z.string(),
+});
+export type ApiServiceDeletedEventData = z.infer<
+  typeof ApiServiceDeletedEventDataModel
+>;
+
+export const ApiServiceDeletedEventModel = z.object({
+  type: z.literal('service_deleted'),
+  data: ApiServiceDeletedEventDataModel,
+});
+export type ApiServiceDeletedEvent = z.infer<
+  typeof ApiServiceDeletedEventModel
+>;
+
+export const ApiLocationEventRequestModel = z
+  .object({
+    location_id: z.string().uuid(),
+  })
+  .and(
+    z.discriminatedUnion('type', [
+      ApiLocationDeviceInstalledEventModel,
+      ApiLocationDeviceUninstalledEventModel,
+      ApiLocationCreatedEventModel,
+      ApiLocationUpdatedEventModel,
+      ApiLocationDeletedEventModel,
+      ApiApartmentCreatedEventModel,
+      ApiApartmentUpdatedEventModel,
+      ApiAnnouncementLinkedEventModel,
+      ApiAnnouncementUnlinkedEventModel,
+      ApiAttachmentLinkedEventModel,
+      ApiAttachmentUnlinkedEventModel,
+      ApiEmbeddedUrlLinkedEventModel,
+      ApiEmbeddedUrlUnlinkedEventModel,
+      ApiTenantMovedInEventModel,
+      ApiTenantMovedOutEventModel,
+      ApiFloorCreatedEventModel,
+      ApiFloorDeletedEventModel,
+      ApiUnitCreatedEventModel,
+      ApiUnitDeletedEventModel,
+      ApiServiceCreatedEventModel,
+      ApiServiceDeletedEventModel,
+    ]),
+  );
+export type ApiLocationEventRequest = z.infer<
+  typeof ApiLocationEventRequestModel
+>;
+
+export const ApiLocationEventModel = ApiStringEntityModel.and(
+  ApiLocationEventRequestModel,
+);
+export type ApiLocationEvent = z.infer<typeof ApiLocationEventModel>;
