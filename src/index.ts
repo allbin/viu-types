@@ -984,14 +984,19 @@ export const ApiGeoJSONModel = z.discriminatedUnion('type', [
 ]);
 export type ApiGeoJSON = z.infer<typeof ApiGeoJSONModel>;
 
-export const ApiFloorModel = z.object({
-  id: z.string().uuid(),
-  organization_id: z.string(),
+export const ApiFloorRequestModel = z.object({
   location_id: z.string().uuid(),
   level: z.number(),
   level_label: z.string().optional(),
   floor_plan: z.string().url().optional(),
   objects: GeoJSON.FeatureCollectionModel.optional(),
+});
+export type ApiFloorRequest = z.infer<typeof ApiFloorRequestModel>;
+
+export const ApiFloorModel = ApiFloorRequestModel.extend({
+  id: z.string().uuid(),
+  organization_id: z.string(),
+  meta: ApiMetadataModel,
 });
 export type ApiFloor = z.infer<typeof ApiFloorModel>;
 
@@ -1004,36 +1009,29 @@ export type ApiBookableResourceRef = z.infer<
   typeof ApiBookableResourceRefModel
 >;
 
-const ApiUnitBaseModel = z.object({
-  id: z.string().uuid(),
-  organization_id: z.string(),
+const ApiUnitRequestModel = z.object({
   floor_id: z.string().uuid(),
   label: z.string(),
+  object_id: z.string().optional(),
+  tenants: z.array(ApiTenantModel),
 });
+export type ApiUnitRequest = z.infer<typeof ApiUnitRequestModel>;
 
-const ApiUnitResidentialModel = ApiUnitBaseModel.extend({
-  object_id: z.string(),
-  type: z.literal('residential'),
-  tenants: z.array(ApiIndividualTenantModel),
-});
-export type ApiUnitResidential = z.infer<typeof ApiUnitResidentialModel>;
-
-const ApiUnitCommercialModel = ApiUnitBaseModel.extend({
-  type: z.literal('commercial'),
-  tenants: z.array(ApiCompanyTenantModel),
-});
-export type ApiUnitCommercial = z.infer<typeof ApiUnitCommercialModel>;
-
-export const ApiUnitModel = z.discriminatedUnion('type', [
-  ApiUnitResidentialModel,
-  ApiUnitCommercialModel,
-]);
-export type ApiUnit = z.infer<typeof ApiUnitModel>;
-
-export const ApiServiceTagModel = z.object({
+const ApiUnitModel = ApiUnitRequestModel.extend({
   id: z.string().uuid(),
   organization_id: z.string(),
+  meta: ApiMetadataModel,
+});
+export type ApiUnit = z.infer<typeof ApiUnitModel>;
+
+export const ApiServiceTagRequestModel = z.object({
   name: z.string(),
+});
+export type ApiServiceTagRequest = z.infer<typeof ApiServiceTagRequestModel>;
+
+export const ApiServiceTagModel = ApiServiceTagRequestModel.extend({
+  id: z.string().uuid(),
+  organization_id: z.string(),
 });
 export type ApiServiceTag = z.infer<typeof ApiServiceTagModel>;
 
@@ -1043,9 +1041,7 @@ export const ApiServiceResourceModel = z.object({
 });
 export type ApiServiceResource = z.infer<typeof ApiServiceResourceModel>;
 
-export const ApiServiceModel = z.object({
-  id: z.string().uuid(),
-  organization_id: z.string(),
+export const ApiServiceRequestModel = z.object({
   type: z.string(),
   name: z.string(),
 
@@ -1059,5 +1055,12 @@ export const ApiServiceModel = z.object({
 
   description: z.string().optional(),
   photo: z.string().url().optional(),
+});
+export type ApiServiceRequest = z.infer<typeof ApiServiceRequestModel>;
+
+export const ApiServiceModel = ApiServiceRequestModel.extend({
+  id: z.string().uuid(),
+  organization_id: z.string(),
+  meta: ApiMetadataModel,
 });
 export type ApiService = z.infer<typeof ApiServiceModel>;
