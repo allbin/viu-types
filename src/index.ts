@@ -229,31 +229,15 @@ export const ApiTenantExtrasModel = z.discriminatedUnion('type', [
 ]);
 export type ApiTenantExtras = z.infer<typeof ApiTenantExtrasModel>;
 
-export const ApiTenantBaseModel = z.object({
+export const ApiTenantModel = z.object({
   id: z.string().uuid(),
   first_name: z.string(),
   last_name: z.string().optional(),
   active_from: z.string().datetime().optional(),
   active_to: z.string().datetime().optional(),
+  base: ApiTenantExtrasModel.optional(),
 });
 
-export type ApiTenantBase = z.infer<typeof ApiTenantBaseModel>;
-
-export const ApiCompanyTenantModel = ApiTenantBaseModel.extend({
-  type: z.literal('company'),
-  company: ApiCompanyModel,
-});
-export type ApiCompanyTenant = z.infer<typeof ApiCompanyTenantModel>;
-
-export const ApiIndividualTenantModel = ApiTenantBaseModel.extend({
-  type: z.literal('individual'),
-});
-export type ApiIndividualTenant = z.infer<typeof ApiIndividualTenantModel>;
-
-export const ApiTenantModel = z.discriminatedUnion('type', [
-  ApiCompanyTenantModel,
-  ApiIndividualTenantModel,
-]);
 export type ApiTenant = z.infer<typeof ApiTenantModel>;
 
 export const ApiPublicApartmentModel = z.object({
@@ -265,7 +249,7 @@ export const ApiApartmentRequestModel = z.object({
   location_id: z.string().uuid(),
   unit: z.string(),
   floor: z.number(),
-  tenants: ApiTenantBaseModel.array(),
+  tenants: ApiTenantModel.array(),
   source_id: z.string().optional(),
 });
 export type ApiApartmentRequest = z.infer<typeof ApiApartmentRequestModel>;
