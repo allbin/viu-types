@@ -1041,16 +1041,9 @@ export type ApiTenantMovedOutEvent = z.infer<
   typeof ApiTenantMovedOutEventModel
 >;
 
-export const ApiFloorCreatedEventDataModel = z.object({
-  floor: ApiFloorRequestModel,
-});
-export type ApiFloorCreatedEventData = z.infer<
-  typeof ApiFloorCreatedEventDataModel
->;
-
 export const ApiFloorCreatedEventModel = z.object({
   type: z.literal('floor_created'),
-  data: ApiFloorCreatedEventDataModel,
+  data: ApiFloorRequestModel,
 });
 
 export const ApiFloorDeletedEventDataModel = z.object({
@@ -1065,16 +1058,9 @@ export const ApiFloorDeletedEventModel = z.object({
   data: ApiFloorDeletedEventDataModel,
 });
 
-export const ApiUnitCreatedEventDataModel = z.object({
-  unit: ApiUnitRequestModel,
-});
-export type ApiUnitCreatedEventData = z.infer<
-  typeof ApiUnitCreatedEventDataModel
->;
-
 export const ApiUnitCreatedEventModel = z.object({
   type: z.literal('unit_created'),
-  data: ApiUnitCreatedEventDataModel,
+  data: ApiUnitRequestModel,
 });
 export type ApiUnitCreatedEvent = z.infer<typeof ApiUnitCreatedEventModel>;
 
@@ -1091,16 +1077,9 @@ export const ApiUnitDeletedEventModel = z.object({
 });
 export type ApiUnitDeletedEvent = z.infer<typeof ApiUnitDeletedEventModel>;
 
-export const ApiServiceCreatedEventDataModel = z.object({
-  service: ApiServiceRequestModel,
-});
-export type ApiServiceCreatedEventData = z.infer<
-  typeof ApiServiceCreatedEventDataModel
->;
-
 export const ApiServiceCreatedEventModel = z.object({
   type: z.literal('service_created'),
-  data: ApiServiceCreatedEventDataModel,
+  data: ApiServiceRequestModel,
 });
 export type ApiServiceCreatedEvent = z.infer<
   typeof ApiServiceCreatedEventModel
