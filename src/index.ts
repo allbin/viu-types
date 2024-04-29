@@ -672,6 +672,7 @@ export const ApiPermissionModel = z.enum([
   'devices:delete',
   'devices:factory-reset',
   'devices:uninstall',
+  'floors:edit',
   'tags:uninstall',
   'embedded-urls:create',
   'embedded-urls:update',
@@ -679,6 +680,9 @@ export const ApiPermissionModel = z.enum([
   'locations:create',
   'locations:update',
   'locations:delete',
+  'services:edit',
+  'service-tags:edit',
+  'units:edit',
   'users:read-all',
 ]);
 export type ApiPermission = z.infer<typeof ApiPermissionModel>;
