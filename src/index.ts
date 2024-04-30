@@ -235,7 +235,7 @@ export const ApiTenantModel = z.object({
   last_name: z.string().optional(),
   active_from: z.string().datetime().optional(),
   active_to: z.string().datetime().optional(),
-  base: ApiTenantExtrasModel.optional(),
+  extras: ApiTenantExtrasModel.optional(),
 });
 
 export type ApiTenant = z.infer<typeof ApiTenantModel>;
@@ -930,6 +930,7 @@ export const ApiServiceTagModel = ApiServiceTagRequestModel.extend({
   id: z.string().uuid(),
   organization_id: z.string(),
 });
+
 export type ApiServiceTag = z.infer<typeof ApiServiceTagModel>;
 
 export const ApiServiceResourceModel = z.object({
