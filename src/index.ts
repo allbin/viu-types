@@ -868,11 +868,32 @@ export type ApiConnectorCreationRequest = z.infer<
   typeof ApiConnectorCreationRequestModel
 >;
 
-export const ApiGeoJSONModel = z.discriminatedUnion('type', [
-  GeoJSON.FeatureCollectionModel,
-  GeoJSON.FeatureModel,
-]);
-export type ApiGeoJSON = z.infer<typeof ApiGeoJSONModel>;
+export const ApiFeatureRequestPropertiesModel = z.object({
+  location_id: z.string().uuid().optional(),
+  floor_id: z.string().uuid().optional(),
+  unit_id: z.string().uuid().optional(),
+});
+export type ApiFeatureRequestProperties = z.infer<
+  typeof ApiFeatureRequestPropertiesModel
+>;
+
+export const ApiFeatureRequest = GeoJSON.FeatureModel.extend({
+  properties: ApiFeatureRequestPropertiesModel,
+});
+export type ApiFeatureRequest = z.infer<typeof ApiFeatureRequest>;
+
+export const ApiFeaturePropertiesModel =
+  ApiFeatureRequestPropertiesModel.extend({
+    id: z.string().uuid(),
+    organization_id: z.string(),
+    meta: ApiMetadataModel,
+  });
+export type ApiFeatureProperties = z.infer<typeof ApiFeaturePropertiesModel>;
+
+export const ApiFeature = ApiFeatureRequest.extend({
+  properties: ApiFeaturePropertiesModel,
+});
+export type ApiFeature = z.infer<typeof ApiFeature>;
 
 export const ApiFloorUpdateRequestModel = z.object({
   level: z.number(),
