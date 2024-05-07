@@ -199,7 +199,6 @@ export const ApiCompanyContactModel = z.object({
 export type ApiCompanyContact = z.infer<typeof ApiCompanyContactModel>;
 
 export const ApiCompanyModel = z.object({
-  id: z.string().uuid(),
   name: z.string(),
   description: z.string().optional(),
   contacts: z.array(ApiCompanyContactModel),
@@ -879,7 +878,6 @@ export const ApiFloorUpdateRequestModel = z.object({
   level: z.number(),
   level_label: z.string().optional(),
   floor_plan: z.string().url().optional(),
-  objects: GeoJSON.FeatureCollectionModel.optional(),
 });
 export type ApiFloorUpdateRequest = z.infer<typeof ApiFloorUpdateRequestModel>;
 
@@ -937,7 +935,7 @@ export type ApiServiceTag = z.infer<typeof ApiServiceTagModel>;
 
 export const ApiServiceResourceModel = z.object({
   name: z.string(),
-  booking_ref: z.array(ApiBookableResourceRefModel).optional(),
+  booking_ref: ApiBookableResourceRefModel.optional(),
 });
 export type ApiServiceResource = z.infer<typeof ApiServiceResourceModel>;
 
