@@ -657,6 +657,7 @@ export const ApiPermissionModel = z.enum([
   'devices:delete',
   'devices:factory-reset',
   'devices:uninstall',
+  'features:edit',
   'floors:edit',
   'tags:uninstall',
   'embedded-urls:create',
