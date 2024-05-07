@@ -890,10 +890,16 @@ export const ApiFeaturePropertiesModel =
   });
 export type ApiFeatureProperties = z.infer<typeof ApiFeaturePropertiesModel>;
 
-export const ApiFeature = ApiFeatureRequest.extend({
+export const ApiFeatureModel = ApiFeatureRequest.extend({
   properties: ApiFeaturePropertiesModel,
 });
-export type ApiFeature = z.infer<typeof ApiFeature>;
+export type ApiFeature = z.infer<typeof ApiFeatureModel>;
+
+export const ApiFeatureCollectionModel = z.object({
+  type: z.literal('FeatureCollection'),
+  features: z.array(ApiFeatureModel),
+});
+export type ApiFeatureCollection = z.infer<typeof ApiFeatureCollectionModel>;
 
 export const ApiFloorUpdateRequestModel = z.object({
   level: z.number(),
