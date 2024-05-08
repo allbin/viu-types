@@ -973,7 +973,7 @@ export const ApiServiceRequestModel = z.object({
 
   resources: z.array(ApiServiceResourceModel),
 
-  tags: z.string().uuid(),
+  tags: z.array(z.string().uuid()),
   equipment: z.string().array(),
 
   location_id: z.string().uuid().optional(),
