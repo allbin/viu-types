@@ -4,8 +4,12 @@ export * as GeoJSON from './geojson';
 
 const auth0UserIdRegex = /^auth0\|[a-f0-9]{24}$/;
 
+export const ApiTagTypeModel = z.enum(['nametag', 'bookingtag']);
+export type ApiTagType = z.infer<typeof ApiTagTypeModel>;
+
 export const ApiTagBaseModel = z.object({
   id: z.string(),
+  type: ApiTagTypeModel.optional(),
   network_id: z.string(),
   organization_id: z.string(),
   last_gateway_id: z.string(),
