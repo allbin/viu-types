@@ -896,7 +896,7 @@ export const ApiFeaturePropertiesModel =
 export type ApiFeatureProperties = z.infer<typeof ApiFeaturePropertiesModel>;
 
 export const ApiFeatureModel = ApiFeatureRequest.extend({
-  properties: ApiFeaturePropertiesModel,
+  properties: ApiFeaturePropertiesModel.or(z.null()),
 });
 export type ApiFeature = z.infer<typeof ApiFeatureModel>;
 
