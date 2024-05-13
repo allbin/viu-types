@@ -359,10 +359,7 @@ export const ApiCoordinateModel = z.object({
 });
 export type ApiCoordinate = z.infer<typeof ApiCoordinateModel>;
 
-export const ApiDeviceConfigModel = z.record(
-  z.string(),
-  z.union([z.boolean(), z.number(), z.string()]),
-);
+export const ApiDeviceConfigModel = z.record(z.string(), z.any());
 export type ApiDeviceConfig = z.infer<typeof ApiDeviceConfigModel>;
 
 export const ApiDeviceCreationEventModel = z.object({
