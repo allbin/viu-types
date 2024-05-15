@@ -362,6 +362,12 @@ export type ApiCoordinate = z.infer<typeof ApiCoordinateModel>;
 export const ApiDeviceConfigModel = z.record(z.string(), z.any());
 export type ApiDeviceConfig = z.infer<typeof ApiDeviceConfigModel>;
 
+export const ApiPublicDeviceConfigModel = z.object({
+  organization_id: z.string(),
+  config: ApiDeviceConfigModel,
+});
+export type ApiPublicDeviceConfig = z.infer<typeof ApiPublicDeviceConfigModel>;
+
 export const ApiDeviceCreationEventModel = z.object({
   type: z.literal('creation'),
 });

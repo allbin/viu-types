@@ -1,4 +1,4 @@
 module.exports = {
     extends: ['@allbin/eslint-config'],
-    ignorePatterns: ['migrations/**/*.js']
+    ignorePatterns: ['migrations/**/*.js', 'prettier.config.cjs']
 };
