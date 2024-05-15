@@ -380,6 +380,7 @@ export const ApiDeviceRequestModel = z.object({
   placement: z.string().optional(),
   license_expiry: z.string().datetime().optional(),
   warranty_expiry: z.string().datetime().optional(),
+  config: ApiDeviceConfigModel,
 });
 export type ApiDeviceRequest = z.infer<typeof ApiDeviceRequestModel>;
 
@@ -458,6 +459,7 @@ export const ApiLocationRequestModel = ApiAddressModel.merge(
   z.object({
     site_name: z.string().optional(),
     coordinate: ApiCoordinateModel.optional(),
+    config: ApiDeviceConfigModel,
   }),
 );
 export type ApiLocationRequest = z.infer<typeof ApiLocationRequestModel>;
@@ -616,13 +618,17 @@ export type ApiSynchronizedType = z.infer<typeof ApiSynchronizedTypeModel>;
 export const ApiOrganizationRequestModel = z.object({
   name: z.string(),
   synchronized_types: ApiSynchronizedTypeModel.array(),
+  config: ApiDeviceConfigModel,
 });
 export type ApiOrganizationRequest = z.infer<
   typeof ApiOrganizationRequestModel
 >;
 
-export const ApiOrganizationModel = ApiStringEntityModel.merge(
-  ApiOrganizationRequestModel,
+export const ApiOrganizationModel = ApiOrganizationRequestModel.merge(
+  z.object({
+    id: z.string(),
+    meta: ApiMetadataModel,
+  }),
 );
 export type ApiOrganization = z.infer<typeof ApiOrganizationModel>;
 
