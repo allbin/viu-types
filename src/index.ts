@@ -98,14 +98,14 @@ export type ApiBookingTagTimeline = z.infer<typeof ApiBookingTagTimelineModel>;
 
 export const ApiBookingTagModel = ApiTagBaseModel.extend({
   type: z.literal('bookingtag'),
-  connector_id: z.string(),
-  resource_id: z.string(),
-  resource_source_id: z.string(),
-  resource_name: z.string(),
-  current_date: z.string(),
+  connector_id: z.string().optional(),
+  resource_id: z.string().optional(),
+  resource_source_id: z.string().optional(),
+  resource_name: z.string().optional(),
+  current_date: z.string().optional(),
   current_event: ApiBookingTagEventModel.optional(),
   next_slot: ApiBookingTagNextSlotModel.optional(),
-  timeline: ApiBookingTagTimelineModel,
+  timeline: ApiBookingTagTimelineModel.optional(),
 });
 
 export type ApiBookingTag = z.infer<typeof ApiBookingTagModel>;
