@@ -10,18 +10,22 @@ export type ApiTagType = z.infer<typeof ApiTagTypeModel>;
 export const ApiTagBaseModel = z.object({
   id: z.string(),
   type: ApiTagTypeModel.optional(),
+  version: z.string().optional(),
+  neomesh_version: z.number().optional(),
   network_id: z.string(),
   organization_id: z.string(),
   last_gateway_id: z.string(),
   last_heartbeat_at: z.string().datetime(),
   scan_action: z.boolean().optional(),
+  is_installed: z.boolean().optional(),
+  hash: z.string().optional(),
 });
 export type ApiTagBase = z.infer<typeof ApiTagBaseModel>;
 
 export const ApiNameTagModel = ApiTagBaseModel.extend({
   type: z.literal('nametag'),
   location_id: z.string().uuid(),
-  placement: z.string(),
+  placement: z.string().optional(),
   unit: z.string(),
   tenants: z.array(z.string()),
   street: z.string(),
@@ -99,7 +103,6 @@ export const ApiBookingTagModel = ApiTagBaseModel.extend({
   resource_source_id: z.string(),
   resource_name: z.string(),
   current_date: z.string(),
-  timezone: z.string(),
   current_event: ApiBookingTagEventModel.optional(),
   next_slot: ApiBookingTagNextSlotModel.optional(),
   timeline: ApiBookingTagTimelineModel,
