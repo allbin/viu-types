@@ -90,7 +90,7 @@ export const ApiBookingTagNextSlotModel = z.discriminatedUnion('type', [
 export type ApiBookingTagNextSlot = z.infer<typeof ApiBookingTagNextSlotModel>;
 
 export const ApiBookingTagTimelineModel = z.object({
-  bitmask: z.bigint(),
+  bitmask: z.string(),
   current_from_index: z.number().optional(),
   current_to_index: z.number().optional(),
 });
