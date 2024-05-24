@@ -99,6 +99,7 @@ export type ApiBookingTagTimeline = z.infer<typeof ApiBookingTagTimelineModel>;
 export const ApiBookingTagModel = ApiTagBaseModel.extend({
   type: z.literal('bookingtag'),
   connector_id: z.string().optional(),
+  location_id: z.string().uuid().optional(),
   resource_id: z.string().optional(),
   resource_source_id: z.string().optional(),
   resource_name: z.string().optional(),
@@ -112,6 +113,7 @@ export type ApiBookingTag = z.infer<typeof ApiBookingTagModel>;
 
 export const ApiBookingTagInstallationRequestModel = z.object({
   connector_id: z.string().uuid(),
+  location_id: z.string().uuid().optional(),
   resource_source_id: z.string(),
   resource_name: z.string(),
 });
@@ -939,6 +941,7 @@ export type ApiFloor = z.infer<typeof ApiFloorModel>;
 
 export const ApiBookableResourceRefModel = z.object({
   connector_id: z.string().uuid(),
+  location_id: z.string().uuid().optional(),
   /** <connector_id:resource_source_id> */
   resource_id: z.string(),
 });
