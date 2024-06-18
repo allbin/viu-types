@@ -293,12 +293,14 @@ export type ApiApartmentUpdatedEvent = z.infer<
   typeof ApiApartmentUpdatedEventModel
 >;
 
-export const ApiAttachmentCategoryModel = z.enum([
+export const ApiAttachmentCategories = [
   'energy-declaration-ovk',
   'property-info',
   'restaurant-menu',
   'other',
-]);
+] as const;
+
+export const ApiAttachmentCategoryModel = z.enum(ApiAttachmentCategories);
 export type ApiAttachmentCategory = z.infer<typeof ApiAttachmentCategoryModel>;
 
 export const ApiAttachmentLinkEventDataModel = z.object({
@@ -590,18 +592,22 @@ export type ApiEmbeddedUrlLinkedEvent = z.infer<
   typeof ApiEmbeddedUrlLinkedEventModel
 >;
 
+export const ApiEmbeddedUrlIcons = [
+  'info',
+  'energy',
+  'video',
+  'stats',
+  'eco',
+  'signal',
+  'network',
+] as const;
+export const ApiEmbeddedUrlIconModel = z.enum(ApiEmbeddedUrlIcons);
+export type ApiEmbeddedUrlIcon = z.infer<typeof ApiEmbeddedUrlIconModel>;
+
 export const ApiEmbeddedUrlRequestModel = z.object({
   name: z.string(),
   label: z.string(),
-  icon: z.enum([
-    'info',
-    'energy',
-    'video',
-    'stats',
-    'eco',
-    'signal',
-    'network',
-  ]),
+  icon: ApiEmbeddedUrlIconModel,
   url: z.string().url(),
   location_ids: z.string().uuid().array(),
   active_from: z.string().datetime().optional(),
