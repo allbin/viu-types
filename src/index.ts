@@ -688,6 +688,7 @@ export const ApiPermissionModel = z.enum([
   'service-tags:edit',
   'units:edit',
   'users:read-all',
+  'organizations:update',
 ]);
 export type ApiPermission = z.infer<typeof ApiPermissionModel>;
 
