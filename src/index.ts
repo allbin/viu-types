@@ -592,6 +592,16 @@ export type ApiEmbeddedUrlLinkedEvent = z.infer<
 
 export const ApiEmbeddedUrlRequestModel = z.object({
   name: z.string(),
+  label: z.string(),
+  icon: z.enum([
+    'info',
+    'energy',
+    'video',
+    'stats',
+    'eco',
+    'signal',
+    'network',
+  ]),
   url: z.string().url(),
   location_ids: z.string().uuid().array(),
   active_from: z.string().datetime().optional(),
