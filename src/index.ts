@@ -217,36 +217,31 @@ export const ApiCompanyModel = z.object({
 
 export type ApiCompany = z.infer<typeof ApiCompanyModel>;
 
-export const ApiTenantExtraResidentialModel = z.object({
-  type: z.literal('individual'),
+export const ApiTenantBaseModel = z.object({
+  id: z.string().uuid(),
+  active_from: z.string().datetime().optional(),
+  active_to: z.string().datetime().optional(),
 });
 
-export type ApiTenantExtraResidential = z.infer<
-  typeof ApiTenantExtraResidentialModel
->;
+export const ApiResidentialTenantModel = ApiTenantBaseModel.extend({
+  type: z.literal('individual'),
+  individual: z.object({
+    first_name: z.string(),
+    last_name: z.string().optional(),
+  }),
+});
+export type ApiResidentialTenant = z.infer<typeof ApiResidentialTenantModel>;
 
-export const ApiTenantExtraCommercialModel = z.object({
+export const ApiCompanyTenantModel = ApiTenantBaseModel.extend({
   type: z.literal('company'),
   company: ApiCompanyModel,
 });
-export type ApiTenantExtraCommercial = z.infer<
-  typeof ApiTenantExtraCommercialModel
->;
+export type ApiCompanyTenant = z.infer<typeof ApiCompanyTenantModel>;
 
-export const ApiTenantExtrasModel = z.discriminatedUnion('type', [
-  ApiTenantExtraResidentialModel,
-  ApiTenantExtraCommercialModel,
+export const ApiTenantModel = z.discriminatedUnion('type', [
+  ApiResidentialTenantModel,
+  ApiCompanyTenantModel,
 ]);
-export type ApiTenantExtras = z.infer<typeof ApiTenantExtrasModel>;
-
-export const ApiTenantModel = z.object({
-  id: z.string().uuid(),
-  first_name: z.string(),
-  last_name: z.string().optional(),
-  active_from: z.string().datetime().optional(),
-  active_to: z.string().datetime().optional(),
-  extras: ApiTenantExtrasModel.optional(),
-});
 
 export type ApiTenant = z.infer<typeof ApiTenantModel>;
 
@@ -701,7 +696,6 @@ export const ApiPermissionModel = z.enum([
   'locations:update',
   'locations:delete',
   'services:edit',
-  'service-tags:edit',
   'units:edit',
   'users:read-all',
   'organizations:update',
@@ -958,9 +952,7 @@ export type ApiFloor = z.infer<typeof ApiFloorModel>;
 
 export const ApiBookableResourceRefModel = z.object({
   connector_id: z.string().uuid(),
-  location_id: z.string().uuid().optional(),
-  /** <connector_id:resource_source_id> */
-  resource_id: z.string(),
+  source_id: z.string(),
 });
 export type ApiBookableResourceRef = z.infer<
   typeof ApiBookableResourceRefModel
@@ -985,20 +977,9 @@ const ApiUnitModel = ApiUnitRequestModel.extend({
 });
 export type ApiUnit = z.infer<typeof ApiUnitModel>;
 
-export const ApiServiceTagRequestModel = z.object({
-  name: z.string(),
-});
-export type ApiServiceTagRequest = z.infer<typeof ApiServiceTagRequestModel>;
-
-export const ApiServiceTagModel = ApiServiceTagRequestModel.extend({
-  id: z.string().uuid(),
-  organization_id: z.string(),
-});
-
-export type ApiServiceTag = z.infer<typeof ApiServiceTagModel>;
-
 export const ApiServiceResourceModel = z.object({
   name: z.string(),
+  capacity: z.number().optional(),
   booking_ref: ApiBookableResourceRefModel.optional(),
 });
 export type ApiServiceResource = z.infer<typeof ApiServiceResourceModel>;
@@ -1007,14 +988,13 @@ export const ApiServiceRequestModel = z.object({
   type: z.string(),
   name: z.string(),
 
+  areas: z.string().array(),
   resources: z.array(ApiServiceResourceModel),
-
-  tags: z.array(z.string().uuid()),
-  equipment: z.string().array(),
 
   location_id: z.string().uuid().optional(),
   floor_id: z.string().uuid().optional(),
 
+  equipment: z.string().array(),
   description: z.string().optional(),
   photo: z.string().url().optional(),
 });
@@ -1026,6 +1006,16 @@ export const ApiServiceModel = ApiServiceRequestModel.extend({
   meta: ApiMetadataModel,
 });
 export type ApiService = z.infer<typeof ApiServiceModel>;
+
+export const ApiAreaRequestModel = z.object({
+  name: z.string(),
+});
+export type ApiAreaRequest = z.infer<typeof ApiAreaRequestModel>;
+
+export const ApiArea = ApiAreaRequestModel.extend({
+  id: z.string().uuid(),
+});
+export type ApiArea = z.infer<typeof ApiArea>;
 
 export const ApiLocationCreatedEventModel = z.object({
   type: z.literal('location_created'),
