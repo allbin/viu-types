@@ -245,6 +245,12 @@ export const ApiTenantModel = z.discriminatedUnion('type', [
 
 export type ApiTenant = z.infer<typeof ApiTenantModel>;
 
+export const ApiOldTenantModel = ApiTenantBaseModel.extend({
+  first_name: z.string(),
+  last_name: z.string().optional(),
+});
+export type ApiOldTenant = z.infer<typeof ApiOldTenantModel>;
+
 export const ApiPublicApartmentModel = z.object({
   unit: z.string(),
 });
@@ -254,7 +260,7 @@ export const ApiApartmentRequestModel = z.object({
   location_id: z.string().uuid(),
   unit: z.string(),
   floor: z.number(),
-  tenants: ApiTenantModel.array(),
+  tenants: ApiOldTenantModel.array(),
   source_id: z.string().optional(),
 });
 export type ApiApartmentRequest = z.infer<typeof ApiApartmentRequestModel>;
