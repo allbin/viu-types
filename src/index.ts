@@ -972,6 +972,7 @@ export const ApiUnitUpdateRequestModel = z.object({
 export type ApiUnitUpdateRequest = z.infer<typeof ApiUnitUpdateRequestModel>;
 
 const ApiUnitRequestModel = ApiUnitUpdateRequestModel.extend({
+  location_id: z.string().uuid(),
   floor_id: z.string().uuid(),
 });
 export type ApiUnitRequest = z.infer<typeof ApiUnitRequestModel>;
