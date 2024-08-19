@@ -640,6 +640,8 @@ export const ApiSynchronizedTypeModel = z.enum([
   'attachments',
   'embedded-urls',
   'locations',
+  'floors',
+  'units',
 ]);
 export type ApiSynchronizedType = z.infer<typeof ApiSynchronizedTypeModel>;
 
