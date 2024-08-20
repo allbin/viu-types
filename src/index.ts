@@ -265,13 +265,11 @@ export const ApiApartmentRequestModel = z.object({
 });
 export type ApiApartmentRequest = z.infer<typeof ApiApartmentRequestModel>;
 
-export const ApiSyncApartmentsRequestModel = z.object({
+export const ApiSyncUnitsRequestModel = z.object({
   organization_id: z.string(),
-  apartment_ids: z.array(z.string().uuid()),
+  unit_ids: z.array(z.string().uuid()),
 });
-export type ApiSyncApartmentsRequest = z.infer<
-  typeof ApiSyncApartmentsRequestModel
->;
+export type ApiSyncUnitsRequest = z.infer<typeof ApiSyncUnitsRequestModel>;
 
 export const ApiApartmentCreatedEventModel = z.object({
   type: z.literal('apartment_created'),
