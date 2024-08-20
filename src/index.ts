@@ -703,6 +703,7 @@ export const ApiPermissionModel = z.enum([
   'locations:delete',
   'services:edit',
   'units:edit',
+  'units:sync',
   'users:read-all',
   'organizations:update',
 ]);
