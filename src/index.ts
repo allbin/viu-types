@@ -967,7 +967,7 @@ export type ApiBookableResourceRef = z.infer<
 
 export const ApiUnitUpdateRequestModel = z.object({
   label: z.string().optional(),
-  object_id: z.string().optional(),
+  object_id: z.string(),
   tenants: z.array(ApiTenantModel),
 });
 export type ApiUnitUpdateRequest = z.infer<typeof ApiUnitUpdateRequestModel>;
