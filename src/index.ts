@@ -684,6 +684,7 @@ export const ApiPermissionModel = z.enum([
   'apartments:update',
   'apartments:delete',
   'apartments:sync',
+  'areas:edit',
   'attachments:create',
   'attachments:update',
   'attachments:delete',
@@ -1022,6 +1023,7 @@ export type ApiAreaRequest = z.infer<typeof ApiAreaRequestModel>;
 
 export const ApiArea = ApiAreaRequestModel.extend({
   id: z.string().uuid(),
+  organization_id: z.string(),
 });
 export type ApiArea = z.infer<typeof ApiArea>;
 
