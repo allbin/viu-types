@@ -910,8 +910,10 @@ export const ApiFeatureRequestPropertiesModel = z.object({
   location_id: z.string().uuid().optional(),
   floor_id: z.string().uuid().optional(),
   unit_id: z.string().uuid().optional(),
-  areas: z.string().array().optional(),
+  service_id: z.string().uuid().optional(),
+  areas: z.array(z.string().uuid()).optional(),
 });
+
 export type ApiFeatureRequestProperties = z.infer<
   typeof ApiFeatureRequestPropertiesModel
 >;
