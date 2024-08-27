@@ -1172,3 +1172,12 @@ export const ApiLocationEventModel = ApiStringEntityModel.and(
   ApiLocationEventRequestModel,
 );
 export type ApiLocationEvent = z.infer<typeof ApiLocationEventModel>;
+
+export const ApiImageUploadResponseModel = z.object({
+  id: z.string(),
+  url: z.string().url(),
+});
+
+export type ApiImageUploadResponse = z.infer<
+  typeof ApiImageUploadResponseModel
+>;
