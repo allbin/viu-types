@@ -825,6 +825,10 @@ export const ApiConnectorMicrosoftCalendarConfigModel =
     tenant_id: z.string(),
     client_id: z.string(),
     client_secret: z.string(),
+    timezone: z
+      .string()
+      .optional()
+      .describe('Timezone defaults to Europe/Stockholm'),
   });
 export type ApiConnectorMicrosoftCalendarConfig = z.infer<
   typeof ApiConnectorMicrosoftCalendarConfigModel
