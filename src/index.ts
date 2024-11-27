@@ -45,7 +45,7 @@ export const ApiConnectorDriverTypeModel = z.enum([
   'wip',
   'bokamera',
   'google-calendar',
-  'microsoft-outlook',
+  'microsoft-personal',
 ]);
 export type ApiConnectorDriverType = z.infer<
   typeof ApiConnectorDriverTypeModel
@@ -820,6 +820,24 @@ export type ApiConnectorGoogleCalendar = z.infer<
   typeof ApiConnectorGoogleCalendarModel
 >;
 
+export const ApiConnectorMicrosoftCalendarConfigModel =
+  ApiConnectorBookingConfigModel.extend({
+    tenant_id: z.string(),
+    client_id: z.string(),
+    client_secret: z.string(),
+  });
+export type ApiConnectorMicrosoftCalendarConfig = z.infer<
+  typeof ApiConnectorMicrosoftCalendarConfigModel
+>;
+
+export const ApiConnectorMicrosoftPersonalModel = ApiConnectorBaseModel.extend({
+  driver_type: z.literal('microsoft-personal'),
+  config: ApiConnectorMicrosoftCalendarConfigModel,
+});
+export type ApiConnectorMicrosoftPersonal = z.infer<
+  typeof ApiConnectorMicrosoftPersonalModel
+>;
+
 export const ApiConnectorBokaMeraConfigModel =
   ApiConnectorBookingConfigModel.extend({
     api_base_url: z.string(),
@@ -847,6 +865,7 @@ export const ApiConnectorModel = z.discriminatedUnion('driver_type', [
   ApiConnectorWipModel,
   ApiConnectorBokaMeraModel,
   ApiConnectorGoogleCalendarModel,
+  ApiConnectorMicrosoftPersonalModel,
 ]);
 export type ApiConnector = z.infer<typeof ApiConnectorModel>;
 
@@ -894,12 +913,19 @@ export type ApiConnectorGoogleCalendarCreationRequest = z.infer<
   typeof ApiConnectorGoogleCalendarCreationRequestModel
 >;
 
+export const ApiConnectorMicrosoftPersonalCreationRequestModel =
+  ApiConnectorRequestModel.omit({ id: true, driver_type: true }).extend({
+    driver_type: z.literal('microsoft-personal'),
+    config: ApiConnectorMicrosoftCalendarConfigModel,
+  });
+
 export const ApiConnectorCreationRequestModel = z.discriminatedUnion(
   'driver_type',
   [
     ApiConnectorWipCreationRequestModel,
     ApiConnectorBokaMeraCreationRequestModel,
     ApiConnectorGoogleCalendarCreationRequestModel,
+    ApiConnectorMicrosoftPersonalCreationRequestModel,
   ],
 );
 export type ApiConnectorCreationRequest = z.infer<
