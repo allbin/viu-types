@@ -820,12 +820,13 @@ export type ApiConnectorGoogleCalendar = z.infer<
   typeof ApiConnectorGoogleCalendarModel
 >;
 
-export const ApiConnectorMicrosoftCalendarConfigModel =
-  ApiConnectorBookingConfigModel.extend({
-    tenant_id: z.string(),
-    client_id: z.string(),
-    client_secret: z.string(),
-  });
+export const ApiConnectorMicrosoftCalendarConfigModel = z.object({
+  tenant_id: z.string(),
+  client_id: z.string(),
+  cert: z.string(),
+  private_key: z.string(),
+  booking_url: z.string().optional(),
+});
 export type ApiConnectorMicrosoftCalendarConfig = z.infer<
   typeof ApiConnectorMicrosoftCalendarConfigModel
 >;
