@@ -402,7 +402,6 @@ export const ApiDeviceDBRequestModel = z
     organization_id: z.string(),
     license_expiry: z.string().datetime(),
     warranty_expiry: z.string().datetime(),
-    created_at: z.string().datetime(),
     pre_exchange: z.boolean(),
     type: ApiDeviceTypeModel,
     state: ApiDeviceStateModel,
