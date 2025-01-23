@@ -400,8 +400,8 @@ export const ApiDeviceDBRequestModel = z
     hardware_id: z.string(),
     source_id: z.string().describe("Provider's ID for this device"),
     organization_id: z.string(),
-    license_expiry: z.string().datetime(),
-    warranty_expiry: z.string().datetime(),
+    license_expiry: z.date(),
+    warranty_expiry: z.date(),
     pre_exchange: z.boolean(),
     type: ApiDeviceTypeModel,
     state: ApiDeviceStateModel,
@@ -708,6 +708,7 @@ export const ApiPermissionModel = z.enum([
   'units:sync',
   'users:read-all',
   'organizations:update',
+  'licenses:update',
 ]);
 export type ApiPermission = z.infer<typeof ApiPermissionModel>;
 
