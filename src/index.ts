@@ -409,6 +409,15 @@ export const ApiDeviceDBRequestModel = z
   .merge(ApiDeviceRequestModel);
 export type ApiDeviceDBRequest = z.infer<typeof ApiDeviceDBRequestModel>;
 
+export const ApiDeviceLicenseExpiryRequestModel = z.object({
+  id: z.string(),
+  license_expiry: z.date(),
+  organization_id: z.string(),
+});
+export type ApiDeviceLicenseExpiryRequest = z.infer<
+  typeof ApiDeviceLicenseExpiryRequestModel
+>;
+
 export const ApiDeviceEventQueryParamsModel = z.object({
   id: z.string().optional().describe('DeviceEvent ID'),
   device_id: z
