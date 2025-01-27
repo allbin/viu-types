@@ -418,6 +418,14 @@ export type ApiDeviceLicenseExpiryRequest = z.infer<
   typeof ApiDeviceLicenseExpiryRequestModel
 >;
 
+export const ApiDevicePreExchangeRequestModel = z.object({
+  pre_exchange: z.boolean(),
+});
+
+export type ApiDevicePreExchangeRequest = z.infer<
+  typeof ApiDevicePreExchangeRequestModel
+>;
+
 export const ApiDeviceEventQueryParamsModel = z.object({
   id: z.string().optional().describe('DeviceEvent ID'),
   device_id: z
