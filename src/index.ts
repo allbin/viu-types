@@ -402,7 +402,7 @@ export const ApiDeviceDBRequestModel = z
     organization_id: z.string(),
     license_expiry: z.string().datetime(),
     warranty_expiry: z.string().datetime(),
-    license_expiry_request: z.string().datetime().optional(),
+    license_expiry_petition: z.string().datetime().optional(),
     pre_exchange: z.boolean(),
     type: ApiDeviceTypeModel,
     state: ApiDeviceStateModel,
@@ -410,13 +410,22 @@ export const ApiDeviceDBRequestModel = z
   .merge(ApiDeviceRequestModel);
 export type ApiDeviceDBRequest = z.infer<typeof ApiDeviceDBRequestModel>;
 
-export const ApiDeviceLicenseExpiryRequestModel = z.object({
+export const ApiDeviceUpdateLicenseExpiryRequestModel = z.object({
   id: z.string(),
   license_expiry: z.string().datetime(),
   organization_id: z.string(),
 });
-export type ApiDeviceLicenseExpiryRequest = z.infer<
-  typeof ApiDeviceLicenseExpiryRequestModel
+export type ApiDeviceUpdateLicenseExpiryRequest = z.infer<
+  typeof ApiDeviceUpdateLicenseExpiryRequestModel
+>;
+
+export const ApiDeviceLicenseExpiryPetitionRequestModel = z.object({
+  id: z.string(),
+  license_expiry_petition: z.string().datetime(),
+  organization_id: z.string(),
+});
+export type ApiDeviceLicenseExpiryPetitionRequest = z.infer<
+  typeof ApiDeviceLicenseExpiryPetitionRequestModel
 >;
 
 export const ApiDeviceWarrantyExpiryRequestModel = z.object({
