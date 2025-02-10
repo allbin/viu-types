@@ -421,7 +421,7 @@ export type ApiDeviceUpdateLicenseExpiryRequest = z.infer<
 
 export const ApiDeviceLicenseExpiryPetitionRequestModel = z.object({
   id: z.string(),
-  license_expiry_petition: z.string().datetime(),
+  license_expiry_petition: z.union([z.string().datetime(), z.null()]),
   organization_id: z.string(),
 });
 export type ApiDeviceLicenseExpiryPetitionRequest = z.infer<
