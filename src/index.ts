@@ -46,6 +46,7 @@ export const ApiConnectorDriverTypeModel = z.enum([
   'bokamera',
   'google-calendar',
   'microsoft-personal',
+  'microsoft-resource',
 ]);
 export type ApiConnectorDriverType = z.infer<
   typeof ApiConnectorDriverTypeModel
@@ -878,6 +879,14 @@ export type ApiConnectorMicrosoftPersonal = z.infer<
   typeof ApiConnectorMicrosoftPersonalModel
 >;
 
+export const ApiConnectorMicrosoftResourceModel = ApiConnectorBaseModel.extend({
+  driver_type: z.literal('microsoft-resource'),
+  config: ApiConnectorMicrosoftCalendarConfigModel,
+});
+export type ApiConnectorMicrosoftResource = z.infer<
+  typeof ApiConnectorMicrosoftResourceModel
+>;
+
 export const ApiConnectorBokaMeraConfigModel =
   ApiConnectorBookingConfigModel.extend({
     api_base_url: z.string(),
@@ -906,6 +915,7 @@ export const ApiConnectorModel = z.discriminatedUnion('driver_type', [
   ApiConnectorBokaMeraModel,
   ApiConnectorGoogleCalendarModel,
   ApiConnectorMicrosoftPersonalModel,
+  ApiConnectorMicrosoftResourceModel,
 ]);
 export type ApiConnector = z.infer<typeof ApiConnectorModel>;
 
@@ -959,6 +969,12 @@ export const ApiConnectorMicrosoftPersonalCreationRequestModel =
     config: ApiConnectorMicrosoftCalendarConfigModel,
   });
 
+export const ApiConnectorMicrosoftResourceCreationRequestModel =
+  ApiConnectorRequestModel.omit({ id: true, driver_type: true }).extend({
+    driver_type: z.literal('microsoft-resource'),
+    config: ApiConnectorMicrosoftCalendarConfigModel,
+  });
+
 export const ApiConnectorCreationRequestModel = z.discriminatedUnion(
   'driver_type',
   [
@@ -966,6 +982,7 @@ export const ApiConnectorCreationRequestModel = z.discriminatedUnion(
     ApiConnectorBokaMeraCreationRequestModel,
     ApiConnectorGoogleCalendarCreationRequestModel,
     ApiConnectorMicrosoftPersonalCreationRequestModel,
+    ApiConnectorMicrosoftResourceCreationRequestModel,
   ],
 );
 export type ApiConnectorCreationRequest = z.infer<
