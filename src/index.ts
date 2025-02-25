@@ -439,7 +439,9 @@ export type ApiDeviceWarrantyExpiryRequest = z.infer<
 >;
 
 export const ApiDevicePreExchangeRequestModel = z.object({
+  id: z.string(),
   pre_exchange: z.boolean(),
+  organization_id: z.string(),
 });
 
 export type ApiDevicePreExchangeRequest = z.infer<
