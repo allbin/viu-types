@@ -369,8 +369,6 @@ export type ApiCoordinate = z.infer<typeof ApiCoordinateModel>;
 export const ApiDeviceConfigModel = z.record(z.string(), z.any());
 export type ApiDeviceConfig = z.infer<typeof ApiDeviceConfigModel>;
 
-export const ApiDeviceContactEmailModel = z.string().optional();
-export type ApiDeviceContactEmail = z.infer<typeof ApiDeviceContactEmailModel>;
 
 export const ApiPublicDeviceConfigModel = z.object({
   organization_id: z.string(),
@@ -691,7 +689,7 @@ export const ApiOrganizationRequestModel = z.object({
   name: z.string(),
   synchronized_types: ApiSynchronizedTypeModel.array(),
   config: ApiDeviceConfigModel,
-  contact_email: ApiDeviceContactEmailModel,
+  contact_email: z.string().email().optional(),
 });
 export type ApiOrganizationRequest = z.infer<
   typeof ApiOrganizationRequestModel
