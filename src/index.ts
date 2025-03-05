@@ -369,7 +369,6 @@ export type ApiCoordinate = z.infer<typeof ApiCoordinateModel>;
 export const ApiDeviceConfigModel = z.record(z.string(), z.any());
 export type ApiDeviceConfig = z.infer<typeof ApiDeviceConfigModel>;
 
-
 export const ApiPublicDeviceConfigModel = z.object({
   organization_id: z.string(),
   config: ApiDeviceConfigModel,
