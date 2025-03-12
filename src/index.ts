@@ -688,7 +688,7 @@ export const ApiOrganizationRequestModel = z.object({
   name: z.string(),
   synchronized_types: ApiSynchronizedTypeModel.array(),
   config: ApiDeviceConfigModel,
-  contact_email: z.array(z.string().email()),
+  contact_email: z.array(z.string().email()).optional(),
 });
 export type ApiOrganizationRequest = z.infer<
   typeof ApiOrganizationRequestModel
