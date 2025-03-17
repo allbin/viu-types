@@ -703,6 +703,17 @@ export const ApiOrganizationModel = ApiOrganizationRequestModel.merge(
 );
 export type ApiOrganization = z.infer<typeof ApiOrganizationModel>;
 
+export const ApiDeviceUpdateLicenseAndWarrantyInfoRequestModel = z.object({
+  serialNumber: z.string(),
+  licenseExpiry: z.string(),
+  warrantyExpiry: z.string(),
+  preExchange: z.boolean(),
+});
+
+export type ApiDeviceUpdateLicenseAndWarrantyInfoRequest = z.infer<
+  typeof ApiDeviceUpdateLicenseAndWarrantyInfoRequestModel
+>;
+
 const ApiParameterValidationErrorBaseModel = z.object({
   msg: z.string(),
   param: z.string(),
