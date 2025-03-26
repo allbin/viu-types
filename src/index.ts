@@ -395,20 +395,29 @@ export const ApiDeviceRequestModel = z.object({
 });
 export type ApiDeviceRequest = z.infer<typeof ApiDeviceRequestModel>;
 
-export const ApiDeviceDBRequestModel = z
+export const ApiDeviceCreationRequestModel = z
   .object({
     name: z.string().describe('Name of the device'),
     hardware_id: z.string(),
     source_id: z.string().describe("Provider's ID for this device"),
     organization_id: z.string(),
-    license_expiry: z.string().datetime(),
-    warranty_expiry: z.string().datetime(),
-    license_expiry_petition: z.string().datetime().optional(),
-    pre_exchange: z.boolean(),
     type: ApiDeviceTypeModel,
     state: ApiDeviceStateModel,
   })
   .merge(ApiDeviceRequestModel);
+
+export type ApiDeviceCreationRequest = z.infer<
+  typeof ApiDeviceCreationRequestModel
+>;
+
+export const ApiDeviceDBRequestModel = z
+  .object({
+    license_expiry: z.string().datetime(),
+    warranty_expiry: z.string().datetime(),
+    license_expiry_petition: z.string().datetime().optional(),
+    pre_exchange: z.boolean(),
+  })
+  .merge(ApiDeviceCreationRequestModel);
 export type ApiDeviceDBRequest = z.infer<typeof ApiDeviceDBRequestModel>;
 
 export const ApiDeviceUpdateLicenseExpiryRequestModel = z.object({
