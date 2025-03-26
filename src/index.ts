@@ -405,7 +405,6 @@ export const ApiDeviceCreationRequestModel = z
     state: ApiDeviceStateModel,
   })
   .merge(ApiDeviceRequestModel);
-
 export type ApiDeviceCreationRequest = z.infer<
   typeof ApiDeviceCreationRequestModel
 >;
