@@ -1290,21 +1290,6 @@ export type ApiImageUploadResponse = z.infer<
 
 // ====== iLOQ Integration Types START ====== //
 
-// Generell typ för API-svar från iLOQ API
-export interface IloqApiResponse<T> {
-  success: boolean;
-  data: T;
-  // Kan finnas fler fält vid fel, t.ex. message, men vi fokuserar på success-fallet här
-}
-
-// Base query params (Adding export)
-export interface IloqApiBaseQueryParams {
-  customerCode: string;
-  lockGroupId: string;
-}
-
-// --- iLOQ API Data Types --- //
-
 export const ApiIloqResourceModel = z.object({
   resourceId: z.string(),
   Name: z.string(),
