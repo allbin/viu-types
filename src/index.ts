@@ -1292,22 +1292,22 @@ export type ApiImageUploadResponse = z.infer<
 
 export const ApiIloqResourceModel = z.object({
   resourceId: z.string(),
-  Name: z.string(),
-  Description: z.string().nullable().optional(),
-  Info: z.string().nullable().optional(),
-  Location: z.string().nullable().optional(),
+  name: z.string(),
+  description: z.string().nullable().optional(),
+  info: z.string().nullable().optional(),
+  location: z.string().nullable().optional(),
   type: z.string().optional(),
-  zoneId: z.string().optional(),
-  realEstateId: z.string().optional(),
+  zone_id: z.string().optional(),
+  real_estate_id: z.string().optional(),
 });
 export type ApiIloqResource = z.infer<typeof ApiIloqResourceModel>;
 
 export const ApiIloqBookingSchemaSlotModel = z.object({
-  slotId: z.string(),
-  startTime: z.string(), // Ex: "08:00"
-  endTime: z.string(), // Ex: "12:00"
+  slot_id: z.string(),
+  start_time: z.string(), // Ex: "08:00"
+  end_time: z.string(), // Ex: "12:00"
   bookable: z.boolean(),
-  bookableByNfcId: z.boolean().optional(),
+  bookable_by_nfc_id: z.boolean().optional(),
 });
 export type ApiIloqBookingSchemaSlot = z.infer<
   typeof ApiIloqBookingSchemaSlotModel
@@ -1315,7 +1315,7 @@ export type ApiIloqBookingSchemaSlot = z.infer<
 
 export const ApiIloqBookingSchemaDayModel = z.object({
   date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/), // YYYY-MM-DD
-  dayOfWeek: z.number().int().min(0).max(6),
+  day_of_week: z.number().int().min(0).max(6),
   slots: z.array(ApiIloqBookingSchemaSlotModel),
 });
 export type ApiIloqBookingSchemaDay = z.infer<
@@ -1323,28 +1323,28 @@ export type ApiIloqBookingSchemaDay = z.infer<
 >;
 
 export const ApiIloqBookingSchemaModel = z.object({
-  schemaType: z.string().optional(),
+  schema_type: z.string().optional(),
   days: z.array(ApiIloqBookingSchemaDayModel),
 });
 export type ApiIloqBookingSchema = z.infer<typeof ApiIloqBookingSchemaModel>;
 
 export const ApiIloqBookingModel = z.object({
-  bookingId: z.string(),
-  resourceId: z.string(),
-  keyNfcId: z.string().optional(),
+  booking_id: z.string(),
+  resource_id: z.string(),
+  key_nfc_id: z.string().optional(),
   name: z.string().nullable().optional(),
-  startTime: z.string().datetime(),
-  endTime: z.string().datetime(),
+  start_time: z.string().datetime(),
+  end_time: z.string().datetime(),
   status: z.string().optional(),
   pin: z.string().optional(),
 });
 export type ApiIloqBooking = z.infer<typeof ApiIloqBookingModel>;
 
 export const ApiIloqCreateBookingRequestModel = z.object({
-  resourceId: z.string(),
-  keyNfcId: z.string(),
-  startTime: z.string().datetime(),
-  endTime: z.string().datetime(),
+  resource_id: z.string(),
+  key_nfc_id: z.string(),
+  start_time: z.string().datetime(),
+  end_time: z.string().datetime(),
   subject: z.string().optional(),
 });
 export type ApiIloqCreateBookingRequest = z.infer<
@@ -1352,25 +1352,25 @@ export type ApiIloqCreateBookingRequest = z.infer<
 >;
 
 export const ApiIloqDeleteBookingQueryParamsModel = z.object({
-  keyNfcId: z.string(),
-  customerCode: z.string(),
-  lockGroupId: z.string(),
+  key_nfc_id: z.string(),
+  customer_code: z.string(),
+  lock_group_id: z.string(),
 });
 export type ApiIloqDeleteBookingQueryParams = z.infer<
   typeof ApiIloqDeleteBookingQueryParamsModel
 >;
 
 export const ApiIloqUserBookingsQueryParamsModel = z.object({
-  keyNfcId: z.string(),
-  customerCode: z.string(),
-  lockGroupId: z.string(),
+  key_nfc_id: z.string(),
+  customer_code: z.string(),
+  lock_group_id: z.string(),
 });
 export type ApiIloqUserBookingsQueryParams = z.infer<
   typeof ApiIloqUserBookingsQueryParamsModel
 >;
 
 export const ApiIloqUserBookingsResponseDataModel = z.object({
-  keyNfcId: z.string(),
+  key_nfc_id: z.string(),
   pin: z.string().optional(),
   bookings: z.array(ApiIloqBookingModel),
 });
@@ -1379,7 +1379,7 @@ export type ApiIloqUserBookingsResponseData = z.infer<
 >;
 
 export const ApiIloqResourceBookingsResponseDataModel = z.object({
-  resourceId: z.string(),
+  resource_id: z.string(),
   bookings: z.array(ApiIloqBookingModel),
 });
 export type ApiIloqResourceBookingsResponseData = z.infer<
@@ -1432,9 +1432,9 @@ export type ApiIloqDeviceResourceFilter = z.infer<
 
 // Note: This defines the structure WITHIN the config object
 export const ApiIloqDeviceConfigModel = z.object({
-  customerCode: z.string(),
-  lockGroupId: z.string(),
-  realEstateId: z.string().optional(),
+  customer_code: z.string(),
+  lock_group_id: z.string(),
+  real_estate_id: z.string().optional(),
   resource_filter: ApiIloqDeviceResourceFilterModel.optional(),
 });
 export type ApiIloqDeviceConfig = z.infer<typeof ApiIloqDeviceConfigModel>;
