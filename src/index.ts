@@ -1291,7 +1291,7 @@ export type ApiImageUploadResponse = z.infer<
 // ====== iLOQ Integration Types START ====== //
 
 export const ApiIloqResourceModel = z.object({
-  resourceId: z.string(),
+  resource_id: z.string(),
   name: z.string(),
   description: z.string().nullable().optional(),
   info: z.string().nullable().optional(),
