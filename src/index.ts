@@ -618,10 +618,36 @@ export const ApiDeviceStatusModel = z.object({
 });
 export type ApiDeviceStatus = z.infer<typeof ApiDeviceStatusModel>;
 
+export const ApiDeviceIntegrationConfigIloqResourceFilterSchemaModel = z.object(
+  {
+    type: z.enum(['whitelist', 'blacklist']),
+    resources: z.array(z.string().uuid()),
+  },
+);
+export type ApiDeviceIntegrationConfigIloqResourceFilterSchema = z.infer<
+  typeof ApiDeviceIntegrationConfigIloqResourceFilterSchemaModel
+>;
+
+export const ApiDeviceIntegrationConfigIloqSchemaModel = z.object({
+  lock_group_id: z.string().uuid(),
+  resource_filter: ApiDeviceIntegrationConfigIloqResourceFilterSchemaModel,
+});
+export type ApiDeviceIntegrationConfigIloqSchema = z.infer<
+  typeof ApiDeviceIntegrationConfigIloqSchemaModel
+>;
+
+export const ApiDeviceIntegrationConfigSchemaModel = z.object({
+  iloq: ApiDeviceIntegrationConfigIloqSchemaModel.optional(),
+});
+export type ApiDeviceIntegrationConfigSchema = z.infer<
+  typeof ApiDeviceIntegrationConfigSchemaModel
+>;
+
 export const ApiDeviceModel = ApiStringEntityModel.merge(
   ApiDeviceDBRequestModel,
 ).extend({
   status: ApiDeviceStatusModel,
+  integration_config: ApiDeviceIntegrationConfigSchemaModel,
 });
 export type ApiDevice = z.infer<typeof ApiDeviceModel>;
 
@@ -710,6 +736,29 @@ export const ApiOrganizationModel = ApiOrganizationRequestModel.merge(
   }),
 );
 export type ApiOrganization = z.infer<typeof ApiOrganizationModel>;
+
+export const ApiOrganizationIntegrationConfigIloqSchemaModel = z.object({
+  customer_code: z.string(),
+  api_key: z.string(),
+});
+export type ApiOrganizationIntegrationConfigIloqSchema = z.infer<
+  typeof ApiOrganizationIntegrationConfigIloqSchemaModel
+>;
+
+export const ApiOrganizationIntegrationConfigSchemaModel = z.object({
+  iloq: ApiOrganizationIntegrationConfigIloqSchemaModel.optional(),
+});
+export type ApiOrganizationIntegrationConfigSchema = z.infer<
+  typeof ApiOrganizationIntegrationConfigSchemaModel
+>;
+
+export const ApiOrganizationIntegrationConfigModel = z.object({
+  organization_id: z.string(),
+  config: ApiOrganizationIntegrationConfigSchemaModel,
+});
+export type ApiOrganizationIntegrationConfig = z.infer<
+  typeof ApiOrganizationIntegrationConfigModel
+>;
 
 export const ApiDeviceUpdateLicenseAndWarrantyInfoRequestModel = z.object({
   hardware_id: z.string(),
