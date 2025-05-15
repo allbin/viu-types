@@ -752,11 +752,18 @@ export type ApiOrganizationIntegrationConfigSchema = z.infer<
   typeof ApiOrganizationIntegrationConfigSchemaModel
 >;
 
-export const ApiOrganizationIntegrationConfigModel = z.object({
+export const ApiOrganizationIntegrationConfigDBRequestModel = z.object({
   organization_id: z.string(),
   config: ApiOrganizationIntegrationConfigSchemaModel,
-  meta: ApiMetadataModel,
 });
+export type ApiOrganizationIntegrationConfigDBRequest = z.infer<
+  typeof ApiOrganizationIntegrationConfigDBRequestModel
+>;
+
+export const ApiOrganizationIntegrationConfigModel =
+  ApiOrganizationIntegrationConfigDBRequestModel.extend({
+    meta: ApiMetadataModel,
+  });
 export type ApiOrganizationIntegrationConfig = z.infer<
   typeof ApiOrganizationIntegrationConfigModel
 >;
