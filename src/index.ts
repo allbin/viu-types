@@ -755,6 +755,7 @@ export type ApiOrganizationIntegrationConfigSchema = z.infer<
 export const ApiOrganizationIntegrationConfigModel = z.object({
   organization_id: z.string(),
   config: ApiOrganizationIntegrationConfigSchemaModel,
+  meta: ApiMetadataModel,
 });
 export type ApiOrganizationIntegrationConfig = z.infer<
   typeof ApiOrganizationIntegrationConfigModel
