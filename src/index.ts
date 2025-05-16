@@ -739,7 +739,6 @@ export type ApiOrganization = z.infer<typeof ApiOrganizationModel>;
 
 export const ApiOrganizationIntegrationConfigIloqSchemaModel = z.object({
   customer_code: z.string(),
-  api_key: z.string(),
 });
 export type ApiOrganizationIntegrationConfigIloqSchema = z.infer<
   typeof ApiOrganizationIntegrationConfigIloqSchemaModel
@@ -1346,7 +1345,6 @@ export type ApiImageUploadResponse = z.infer<
 >;
 
 // ====== iLOQ Integration Types START ====== //
-
 export const ApiIloqResourceModel = z.object({
   resource_id: z.string(),
   name: z.string(),
@@ -1442,58 +1440,4 @@ export const ApiIloqResourceBookingsResponseDataModel = z.object({
 export type ApiIloqResourceBookingsResponseData = z.infer<
   typeof ApiIloqResourceBookingsResponseDataModel
 >;
-
-// --- iLOQ Configuration Types (for viu-api database config fields) --- //
-
-export const ApiIloqOrganizationRealEstateConfigModel = z.object({
-  description: z.string().optional(),
-  resources: z.array(z.string()).optional(),
-});
-export type ApiIloqOrganizationRealEstateConfig = z.infer<
-  typeof ApiIloqOrganizationRealEstateConfigModel
->;
-
-export const ApiIloqOrganizationLockGroupConfigModel = z.object({
-  description: z.string().optional(),
-  real_estates: z.record(ApiIloqOrganizationRealEstateConfigModel).optional(),
-});
-export type ApiIloqOrganizationLockGroupConfig = z.infer<
-  typeof ApiIloqOrganizationLockGroupConfigModel
->;
-
-export const ApiIloqOrganizationCustomerConfigModel = z.object({
-  description: z.string().optional(),
-  iloqapi_base_url: z.string().url().optional(),
-  iloqapi_api_key: z.string().optional(),
-  lock_groups: z.record(ApiIloqOrganizationLockGroupConfigModel),
-});
-export type ApiIloqOrganizationCustomerConfig = z.infer<
-  typeof ApiIloqOrganizationCustomerConfigModel
->;
-
-export const ApiIloqOrganizationGlobalConfigModel = z.object({
-  default_iloqapi_base_url: z.string().url().optional(),
-  default_iloqapi_api_key: z.string().optional(),
-});
-export type ApiIloqOrganizationGlobalConfig = z.infer<
-  typeof ApiIloqOrganizationGlobalConfigModel
->;
-
-export const ApiIloqDeviceResourceFilterModel = z.object({
-  type: z.enum(['whitelist', 'blacklist']),
-  resources: z.array(z.string()),
-});
-export type ApiIloqDeviceResourceFilter = z.infer<
-  typeof ApiIloqDeviceResourceFilterModel
->;
-
-// Note: This defines the structure WITHIN the config object
-export const ApiIloqDeviceConfigModel = z.object({
-  customer_code: z.string(),
-  lock_group_id: z.string(),
-  real_estate_id: z.string().optional(),
-  resource_filter: ApiIloqDeviceResourceFilterModel.optional(),
-});
-export type ApiIloqDeviceConfig = z.infer<typeof ApiIloqDeviceConfigModel>;
-
 // ====== iLOQ Integration Types END ====== //
