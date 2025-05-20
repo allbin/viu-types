@@ -1344,7 +1344,6 @@ export type ApiImageUploadResponse = z.infer<
   typeof ApiImageUploadResponseModel
 >;
 
-// ====== iLOQ Integration Types START ====== //
 export const ApiIloqResourceModel = z.object({
   resource_id: z.string(),
   name: z.string(),
@@ -1406,24 +1405,6 @@ export type ApiIloqCreateBookingRequest = z.infer<
   typeof ApiIloqCreateBookingRequestModel
 >;
 
-export const ApiIloqDeleteBookingQueryParamsModel = z.object({
-  key_nfc_id: z.string(),
-  customer_code: z.string(),
-  lock_group_id: z.string(),
-});
-export type ApiIloqDeleteBookingQueryParams = z.infer<
-  typeof ApiIloqDeleteBookingQueryParamsModel
->;
-
-export const ApiIloqUserBookingsQueryParamsModel = z.object({
-  key_nfc_id: z.string(),
-  customer_code: z.string(),
-  lock_group_id: z.string(),
-});
-export type ApiIloqUserBookingsQueryParams = z.infer<
-  typeof ApiIloqUserBookingsQueryParamsModel
->;
-
 export const ApiIloqUserBookingsResponseDataModel = z.object({
   key_nfc_id: z.string(),
   pin: z.string().optional(),
@@ -1440,4 +1421,3 @@ export const ApiIloqResourceBookingsResponseDataModel = z.object({
 export type ApiIloqResourceBookingsResponseData = z.infer<
   typeof ApiIloqResourceBookingsResponseDataModel
 >;
-// ====== iLOQ Integration Types END ====== //
