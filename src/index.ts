@@ -15,7 +15,7 @@ export const ApiTagBaseModel = z.object({
   network_id: z.string(),
   organization_id: z.string(),
   last_gateway_id: z.string(),
-  last_heartbeat_at: z.string().datetime(),
+  last_heartbeat_at: z.string().datetime({ offset: true }),
   scan_action: z.boolean().optional(),
   is_installed: z.boolean().optional(),
   hash: z.string().optional(),
@@ -53,8 +53,8 @@ export type ApiConnectorDriverType = z.infer<
 >;
 
 export const ApiBookingTagEventModel = z.object({
-  from: z.string().datetime(),
-  to: z.string().datetime(),
+  from: z.string().datetime({ offset: true }),
+  to: z.string().datetime({ offset: true }),
   contact_primary: z.string(),
   contact_secondary: z.string().optional(),
   contact_tertiary: z.string().optional(),
@@ -62,13 +62,13 @@ export const ApiBookingTagEventModel = z.object({
 export type ApiBookingTagEvent = z.infer<typeof ApiBookingTagEventModel>;
 
 export const ApiBookingTagNextSlotBaseModel = z.object({
-  from: z.string().datetime(),
+  from: z.string().datetime({ offset: true }),
 });
 
 export const ApiBookingTagNextSlotFreeModel =
   ApiBookingTagNextSlotBaseModel.extend({
     type: z.literal('free'),
-    from: z.string().datetime(),
+    from: z.string().datetime({ offset: true }),
   });
 export type ApiBookingTagNextSlotFree = z.infer<
   typeof ApiBookingTagNextSlotFreeModel
@@ -77,8 +77,8 @@ export type ApiBookingTagNextSlotFree = z.infer<
 export const ApiBookingTagNextSlotEventModel =
   ApiBookingTagNextSlotBaseModel.extend({
     type: z.literal('event'),
-    from: z.string().datetime(),
-    to: z.string().datetime(),
+    from: z.string().datetime({ offset: true }),
+    to: z.string().datetime({ offset: true }),
   });
 export type ApiBookingTagNextSlotEvent = z.infer<
   typeof ApiBookingTagNextSlotEventModel
@@ -160,10 +160,10 @@ export type ApiAnnouncementLinkedEvent = z.infer<
 >;
 
 export const ApiMetadataModel = z.object({
-  created_at: z.string().datetime(),
+  created_at: z.string().datetime({ offset: true }),
   created_by: z.string().regex(auth0UserIdRegex).describe('Auth0 User ID'),
-  updated_at: z.string().datetime(),
-  deleted_at: z.string().datetime().optional(),
+  updated_at: z.string().datetime({ offset: true }),
+  deleted_at: z.string().datetime({ offset: true }).optional(),
   deleted_by: z
     .string()
     .regex(auth0UserIdRegex)
@@ -188,8 +188,8 @@ export type ApiAnnouncementRequest = {
 export const ApiAnnouncementRequestModel = z.object({
   message: z.string(),
   location_ids: z.string().uuid().array(),
-  active_from: z.string().datetime().optional(),
-  active_to: z.string().datetime().optional(),
+  active_from: z.string().datetime({ offset: true }).optional(),
+  active_to: z.string().datetime({ offset: true }).optional(),
 });
 
 export const ApiAnnouncementModel = ApiUuidEntityModel.merge(
@@ -220,8 +220,8 @@ export type ApiCompany = z.infer<typeof ApiCompanyModel>;
 
 export const ApiTenantBaseModel = z.object({
   id: z.string().uuid(),
-  active_from: z.string().datetime().optional(),
-  active_to: z.string().datetime().optional(),
+  active_from: z.string().datetime({ offset: true }).optional(),
+  active_to: z.string().datetime({ offset: true }).optional(),
 });
 
 export const ApiResidentialTenantModel = ApiTenantBaseModel.extend({
@@ -320,8 +320,8 @@ export type ApiAttachmentLinkedEvent = z.infer<
 
 export const ApiAttachmentUploadMetadataModel = z.object({
   category: ApiAttachmentCategoryModel,
-  active_from: z.string().datetime().optional(),
-  active_to: z.string().datetime().optional(),
+  active_from: z.string().datetime({ offset: true }).optional(),
+  active_to: z.string().datetime({ offset: true }).optional(),
 });
 export type ApiAttachmentUploadMetadata = z.infer<
   typeof ApiAttachmentUploadMetadataModel
@@ -411,9 +411,9 @@ export type ApiDeviceCreationRequest = z.infer<
 
 export const ApiDeviceDBRequestModel = z
   .object({
-    license_expiry: z.string().datetime(),
-    warranty_expiry: z.string().datetime(),
-    license_expiry_petition: z.string().datetime().optional(),
+    license_expiry: z.string().datetime({ offset: true }),
+    warranty_expiry: z.string().datetime({ offset: true }),
+    license_expiry_petition: z.string().datetime({ offset: true }).optional(),
     pre_exchange: z.boolean(),
   })
   .merge(ApiDeviceCreationRequestModel);
@@ -421,7 +421,7 @@ export type ApiDeviceDBRequest = z.infer<typeof ApiDeviceDBRequestModel>;
 
 export const ApiDeviceUpdateLicenseExpiryRequestModel = z.object({
   id: z.string(),
-  license_expiry: z.string().datetime(),
+  license_expiry: z.string().datetime({ offset: true }),
   organization_id: z.string(),
 });
 export type ApiDeviceUpdateLicenseExpiryRequest = z.infer<
@@ -430,7 +430,7 @@ export type ApiDeviceUpdateLicenseExpiryRequest = z.infer<
 
 export const ApiDeviceLicenseExpiryPetitionRequestModel = z.object({
   id: z.string(),
-  license_expiry_petition: z.string().datetime().optional(),
+  license_expiry_petition: z.string().datetime({ offset: true }).optional(),
   organization_id: z.string(),
 });
 export type ApiDeviceLicenseExpiryPetitionRequest = z.infer<
@@ -439,7 +439,7 @@ export type ApiDeviceLicenseExpiryPetitionRequest = z.infer<
 
 export const ApiDeviceWarrantyExpiryRequestModel = z.object({
   id: z.string(),
-  warranty_expiry: z.string().datetime(),
+  warranty_expiry: z.string().datetime({ offset: true }),
   organization_id: z.string(),
 });
 
@@ -469,12 +469,12 @@ export const ApiDeviceEventQueryParamsModel = z.object({
     .describe('Organization for which to retrieve events'),
   date_start: z
     .string()
-    .datetime()
+    .datetime({ offset: true })
     .optional()
     .describe('Start of time range for which to retrieve events'),
   date_end: z
     .string()
-    .datetime()
+    .datetime({ offset: true })
     .optional()
     .describe('End of time range for which to retrieve events'),
   offset: z
@@ -614,7 +614,7 @@ export type ApiDeviceInstallationRequest = z.infer<
 export const ApiDeviceStatusModel = z.object({
   hardware_online: z.boolean(),
   software_online: z.boolean(),
-  last_seen: z.string().datetime().optional(),
+  last_seen: z.string().datetime({ offset: true }).optional(),
 });
 export type ApiDeviceStatus = z.infer<typeof ApiDeviceStatusModel>;
 
@@ -684,8 +684,8 @@ export const ApiEmbeddedUrlRequestModel = z.object({
   icon: ApiEmbeddedUrlIconModel,
   url: z.string().url(),
   location_ids: z.string().uuid().array(),
-  active_from: z.string().datetime().optional(),
-  active_to: z.string().datetime().optional(),
+  active_from: z.string().datetime({ offset: true }).optional(),
+  active_to: z.string().datetime({ offset: true }).optional(),
 });
 export type ApiEmbeddedUrlRequest = z.infer<typeof ApiEmbeddedUrlRequestModel>;
 
@@ -1387,8 +1387,8 @@ export const ApiIloqBookingModel = z.object({
   resource_id: z.string(),
   key_nfc_id: z.string().optional(),
   name: z.string().nullable().optional(),
-  start_time: z.string().datetime(),
-  end_time: z.string().datetime(),
+  start_time: z.string().datetime({ offset: true }),
+  end_time: z.string().datetime({ offset: true }),
   status: z.string().optional(),
   pin: z.string().optional(),
 });
@@ -1397,8 +1397,8 @@ export type ApiIloqBooking = z.infer<typeof ApiIloqBookingModel>;
 export const ApiIloqCreateBookingRequestModel = z.object({
   resource_id: z.string(),
   key_nfc_id: z.string(),
-  start_time: z.string().datetime(),
-  end_time: z.string().datetime(),
+  start_time: z.string().datetime({ offset: true }),
+  end_time: z.string().datetime({ offset: true }),
   subject: z.string().optional(),
 });
 export type ApiIloqCreateBookingRequest = z.infer<
