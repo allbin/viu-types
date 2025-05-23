@@ -1369,7 +1369,7 @@ export type ApiIloqBookingSchemaSlot = z.infer<
 
 export const ApiIloqBookingSchemaDayModel = z.object({
   date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/), // YYYY-MM-DD
-  day_of_week: z.number().int().min(0).max(6),
+  day_of_week: z.number().int().min(1).max(7),
   slots: z.array(ApiIloqBookingSchemaSlotModel),
 });
 export type ApiIloqBookingSchemaDay = z.infer<
